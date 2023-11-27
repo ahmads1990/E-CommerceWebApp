@@ -1,4 +1,5 @@
 ﻿using E_CommerceWebApp.Models;
+using E_CommerceWebApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,18 @@ namespace E_CommerceWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepo _productRepo;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductRepo productRepo)
         {
-            _logger = logger;
+            _productRepo = productRepo;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var products = _productRepo.GetAllProducts();
+            var viewModel = new HomeViewModel { Products = products };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

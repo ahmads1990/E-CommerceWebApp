@@ -10,6 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
+//DP
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
