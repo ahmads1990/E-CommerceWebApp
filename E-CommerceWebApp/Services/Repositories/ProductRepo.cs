@@ -9,14 +9,10 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             _dbContext = dbContext;
         }
-
-     
-
         public IEnumerable<Product> GetAllProducts()
         {
             return _dbContext.Products.ToList();
         }
-
         public Product GetProductByID(int id)
         {
             return _dbContext.Products.FirstOrDefault(p => p.ProductID == id);
