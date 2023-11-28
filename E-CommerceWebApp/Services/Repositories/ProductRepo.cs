@@ -1,4 +1,5 @@
 ﻿using E_CommerceWebApp.Services.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services.Repositories
 {
@@ -11,7 +12,9 @@ namespace E_CommerceWebApp.Services.Repositories
         }
         public IEnumerable<Product> GetAllProducts()
         {
-            return _dbContext.Products.ToList();
+            return _dbContext.Products
+                    .Include(p => p.ProductImage)
+                    .ToList();
         }
         public Product GetProductByID(int id)
         {

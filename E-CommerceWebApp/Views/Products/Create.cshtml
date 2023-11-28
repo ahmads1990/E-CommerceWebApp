@@ -8,7 +8,7 @@
 
 <h4>Product</h4>
 <hr />
-<div class="row">
+<div class="row justify-content-between">
     <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,6 +37,11 @@
             </div>
         </form>
     </div>
+    <div class="col-md-4">
+        <div id="image-container" class="d-none">
+            <img src="" alt="Product Image" class="img-thumbnail" />
+        </div>
+    </div>
 </div>
 
 <div>
@@ -47,4 +52,15 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function(){
+            $('#ProductImage').on('change', function(){
+                var imageContainer = $('#image-container');
+                var image = window.URL.createObjectURL(this.files[0]);
+
+                imageContainer.removeClass('d-none');
+                imageContainer.find('img').attr('src', image);
+            });
+        });
+    </script>
 }

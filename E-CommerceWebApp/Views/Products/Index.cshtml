@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<E_CommerceWebApp.Models.Product>
-
+@{
+    var imageWidth = 150;
+    var imageHeight = 100;
+}
 <h1>Index</h1>
 
 <p>
@@ -8,6 +11,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Image</th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
@@ -24,6 +28,17 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @if (item.ProductImage == null)
+                    {
+                        <!-- Product image-->
+                        <img width="@imageWidth" height="@imageHeight" class="card-img-top" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="..." />
+                    }
+                    else
+                    {
+                        <img width="@imageWidth" height="@imageHeight" src="data:image/*;base64,@(Convert.ToBase64String(item.ProductImage.ImageData))" class="img-thumbnail" alt="" />
+                    }
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
