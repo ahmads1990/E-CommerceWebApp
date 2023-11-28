@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlSer
 
 //DP
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.AddSingleton<ImageService>();
 
 var app = builder.Build();
 

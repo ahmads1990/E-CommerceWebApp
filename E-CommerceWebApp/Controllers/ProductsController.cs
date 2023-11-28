@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_CommerceWebApp.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Controllers
@@ -6,10 +7,11 @@ namespace E_CommerceWebApp.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductRepo _productRepo;
-
-        public ProductsController(IProductRepo productRepo)
+        private readonly ImageService _imageService;
+        public ProductsController(IProductRepo productRepo, ImageService imageService)
         {
             _productRepo = productRepo;
+            _imageService = imageService;
         }
 
         // GET: Products
@@ -28,16 +30,23 @@ namespace E_CommerceWebApp.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product product) 
+        public IActionResult Create(CreateProductViewModel createProductViewModel) 
         {
             if (ModelState.IsValid)
             {
+                if(!_imageService.CheckImage(createProductViewModel.ProductImage)) 
+                {
+                    //return error
+                    return View(createProductViewModel);
+                }
+
                 // Add new Product
-                _productRepo.AddNewProduct(product);
+                var newProduct = createProductViewModel.toProduct();
+                _productRepo.AddNewProduct(newProduct);
                 // return to index
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(createProductViewModel);
         }
     }
 }
