@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Xml;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services
 {
-    public class ApplicationDBContext: DbContext
+    public class ApplicationDBContext: IdentityDbContext<ApplicationUser>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -12,6 +12,7 @@ namespace E_CommerceWebApp.Services
         //public DbSet<ProductImage> ProductImages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Product>().HasData(
              new Product { ProductImage = null, ProductID = 1, ProductName = "Fancy Product", Description = "Fancy", Price = 40 },
              new Product { ProductImage = null, ProductID = 2, ProductName = "Special Item", Description = "Special", Price = 80 },
