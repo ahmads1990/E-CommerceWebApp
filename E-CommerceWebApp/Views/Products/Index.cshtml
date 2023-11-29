@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<E_CommerceWebApp.Models.Product>
 @{
     var imageWidth = 150;
-    var imageHeight = 100;
+    var imageHeight = "auto";
 }
 <h1>Index</h1>
 
@@ -32,11 +32,11 @@
                     @if (item.ProductImage == null)
                     {
                         <!-- Product image-->
-                        <img width="@imageWidth" height="@imageHeight" class="card-img-top" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="..." />
+                        <img width="@imageWidth" height="@imageHeight" object-fit="cover";class="card-img-top" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="..." />
                     }
                     else
                     {
-                        <img width="@imageWidth" height="@imageHeight" src="data:image/*;base64,@(Convert.ToBase64String(item.ProductImage.ImageData))" class="img-thumbnail" alt="" />
+                        <img width="@imageWidth" height="@imageHeight" object-fit="cover" src="data:image/*;base64,@(Convert.ToBase64String(item.ProductImage.ImageData))" class="img-thumbnail" alt="" />
                     }
                 </td>
                 <td>
