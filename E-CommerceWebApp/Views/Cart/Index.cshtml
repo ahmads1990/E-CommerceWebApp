@@ -1,0 +1,40 @@
+﻿@model IEnumerable<E_CommerceWebApp.Models.CartItem>
+@{
+
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m=>m.Product.ProductName)
+            <th>
+            <th>@Html.DisplayNameFor(m=>m.Product.Price)
+            <th>
+            <th>@Html.DisplayNameFor(m=>m.Amount)
+            <th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <a asp-action="AddOne" asp-route-id="@item.ProductID">Add More</a> |
+                    <a asp-action="RemoveOne" asp-route-id="@item.ProductID">Remove One</a>
+                    <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

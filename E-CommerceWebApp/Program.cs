@@ -27,6 +27,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddSingleton<ImageService>();
 
+builder.Services.AddScoped<ICartRepo, CartRepo>();
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<EmailServerSettings>(builder.Configuration.GetSection("EmailServerSettings"));
 
