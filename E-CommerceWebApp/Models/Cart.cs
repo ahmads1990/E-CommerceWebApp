@@ -3,7 +3,9 @@
     public class Cart
     {
         public int Id { get; set; }
-        //user
-        public List<CartItem> cartItems { get; set; }
+        //user to do
+        // date
+        public DateTime timeCreated { get; set; }
+        public IEnumerable<CartItem> cartItems { get; set; }
     }
 }
