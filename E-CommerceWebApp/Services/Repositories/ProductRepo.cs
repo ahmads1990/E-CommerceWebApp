@@ -16,14 +16,28 @@ namespace E_CommerceWebApp.Services.Repositories
                     .Include(p => p.ProductImage)
                     .ToList();
         }
-        public Product GetProductByID(int id)
+        public Product GetProductByID(int productID)
         {
-            return _dbContext.Products.FirstOrDefault(p => p.ProductID == id);
+            return _dbContext.Products.FirstOrDefault(p => p.ProductID == productID);
         }
         public void AddNewProduct(Product product)
         {
             _dbContext.Products.Add(product);
             _dbContext.SaveChanges();
+        }
+        public void UpdateProduct(Product product)
+        {
+            _dbContext.Products.Update(product);
+            _dbContext.SaveChanges();
+        }
+        public void DeleteProduct(int productID)
+        {
+            var existingProduct = GetProductByID(productID);
+            if (existingProduct != null)
+            {
+                _dbContext.Products.Remove(existingProduct);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

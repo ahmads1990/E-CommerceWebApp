@@ -48,5 +48,44 @@ namespace E_CommerceWebApp.Controllers
             }
             return View(createProductViewModel);
         }
+        // GET: Products/Details/5
+        public IActionResult Details(int productID)
+        {
+            var product = _productRepo.GetProductByID(productID);
+
+            return View(product);
+        }
+        [HttpGet]
+        public IActionResult Update(int productID)
+        {
+            var product = _productRepo.GetProductByID(productID);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+        // Post: Products/Update/5
+        [HttpPost]
+        public IActionResult Update(Product product)
+        {
+            try
+            {
+                _productRepo.UpdateProduct(product);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // Post: Products/Delete/5
+        public  IActionResult Delete(int productID)
+        {
+            _productRepo.DeleteProduct(productID); 
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
