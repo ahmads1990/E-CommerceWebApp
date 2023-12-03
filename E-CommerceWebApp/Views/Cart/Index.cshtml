@@ -1,34 +1,45 @@
 ﻿@model IEnumerable<E_CommerceWebApp.Models.CartItem>
 @{
-
+    var imageWidth = "auto";
+    var imageHeight = 100;
 }
 
-<h1>Index</h1>
+<h1>Cart</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m=>m.Product.ProductName)
-            <th>
-            <th>@Html.DisplayNameFor(m=>m.Product.Price)
-            <th>
-            <th>@Html.DisplayNameFor(m=>m.Amount)
-            <th>
+            <th>@Html.DisplayNameFor(cartItem=>cartItem.Product.ProductImage)</th>
+            <th>@Html.DisplayNameFor(cartItem=>cartItem.Product.ProductName)</th>
+            <th>@Html.DisplayNameFor(cartItem=>cartItem.Product.Price)</th>
+            <th>@Html.DisplayNameFor(cartItem=>cartItem.Amount)</th>
+            <th>Total</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
+            <!-- Product image-->
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    @if (item.Product.ProductImage == null)
+                    {
+                        @*if image is null load dummy image*@
+                        <img width="@imageWidth" height="@imageHeight" object-fit="cover"
+                            class="c" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg"
+                            alt="Image for product @(item.Product.ProductName)" />
+                    }
+                    else
+                    {
+                        <img width="@imageWidth" height="@imageHeight" object-fit="cover"
+                         class="c" src="data:image/*;base64,@(Convert.ToBase64String(item.Product.ProductImage.ImageData))"
+                         alt="Image for product @(item.Product.ProductName)" />
+                    }
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td>@(item.Product.Price*item.Amount)</td>
                 <td>
                     <a asp-action="AddOne" asp-route-id="@item.ProductID">Add More</a> |
                     <a asp-action="RemoveOne" asp-route-id="@item.ProductID">Remove One</a>

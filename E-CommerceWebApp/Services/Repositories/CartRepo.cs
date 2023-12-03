@@ -26,7 +26,10 @@ namespace E_CommerceWebApp.Services.Repositories
         }
         public IEnumerable<CartItem> GetAllCartItems()
         {
-           return _dbContext.CartItems.ToList();
+           return _dbContext.CartItems
+                .Include(p=>p.Product)
+                .Include(im=>im.Product.ProductImage)
+                .ToList();
         }
         public void AddOrUpdateCartItem(int productID)
         {
