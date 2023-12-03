@@ -31,6 +31,10 @@ namespace E_CommerceWebApp.Services.Repositories
                 .Include(im=>im.Product.ProductImage)
                 .ToList();
         }
+        public CartItem GetCartItemByID(int itemID)
+        {
+            return _dbContext.CartItems.FirstOrDefault(i => i.ID == itemID);
+        }
         public void AddOrUpdateCartItem(int productID)
         {
             // Check if the entity already exists in the database
@@ -52,19 +56,28 @@ namespace E_CommerceWebApp.Services.Repositories
                 // The entity already exists, perform difference logic here
                 existingCartItem.Amount += 1;
             }
-
             // Save changes to the database
             _dbContext.SaveChanges();
         }
-
+        public void UpdateCartItemAmount(int itemID, int amount)
+        { 
+            var existingCartItem = GetCartItemByID(itemID);
+            if (existingCartItem != null)
+            {
+                existingCartItem.Amount = amount;
+                _dbContext.CartItems.Update(existingCartItem);
+                _dbContext.SaveChanges();
+            }
+        }
         public void RemoveCartItem(int itemID)
         {
-            throw new NotImplementedException();
+            // Check if the entity already exists in the database
+            var existingCartItem = GetCartItemByID(itemID);
+            if (existingCartItem != null)
+            {
+                _dbContext.CartItems.Remove(existingCartItem);
+                _dbContext.SaveChanges();
+            }
         }
-
-        public void UpdateCartItem(int itemID)
-        {
-            throw new NotImplementedException();
-        } 
     }
 }

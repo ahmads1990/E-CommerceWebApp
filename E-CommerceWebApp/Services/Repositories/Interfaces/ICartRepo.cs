@@ -7,8 +7,9 @@
         public Cart GetCart(int cartID);
         // CartItems
         public IEnumerable<CartItem> GetAllCartItems();
+        public CartItem GetCartItemByID(int itemID);
         public void AddOrUpdateCartItem(int productID);
-        public void UpdateCartItem(int itemID);
+        public void UpdateCartItemAmount(int itemID, int amount);
         public void RemoveCartItem(int itemID);
     }
 }

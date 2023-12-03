@@ -20,6 +20,7 @@ namespace E_CommerceWebApp.Controllers
         {
             _cartRepo.CreateNewCart();
         }
+        // for product card
         [HttpPost]
         public IActionResult UpdateCartItem(int id)
         {
@@ -33,6 +34,25 @@ namespace E_CommerceWebApp.Controllers
                 success = false;
             }
             return Json(new { success });
+        }
+        // update
+        public IActionResult UpdateCartItemAmount(int itemID, int amount)
+        {
+            try
+            {
+                _cartRepo.UpdateCartItemAmount(itemID, amount);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // delete
+        public IActionResult RemoveCartItem(int id)
+        {
+            _cartRepo.RemoveCartItem(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

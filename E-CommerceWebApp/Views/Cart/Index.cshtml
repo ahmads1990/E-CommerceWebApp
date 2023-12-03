@@ -41,9 +41,8 @@
                 <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                 <td>@(item.Product.Price*item.Amount)</td>
                 <td>
-                    <a asp-action="AddOne" asp-route-id="@item.ProductID">Add More</a> |
-                    <a asp-action="RemoveOne" asp-route-id="@item.ProductID">Remove One</a>
-                    <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                    <a asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount+1)">Add More</a> |
+                    <a asp-action="RemoveCartItem" asp-route-id="@item.ID">Remove</a>
                 </td>
             </tr>
         }
