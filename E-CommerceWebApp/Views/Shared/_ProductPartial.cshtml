@@ -31,14 +31,11 @@
         </div>
         <!-- Product actions-->
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-                <form id="addToCartForm" method="post" asp-controller="Cart" asp-action="UpdateCartItem">
-                    <button class="btn btn-outline-dark mt-auto" type="submit">Add me</button>
-                    @Html.HiddenFor(model => model.ProductID)
-                    @Html.HiddenFor(model => model.ProductName)
-                    @Html.HiddenFor(model => model.Price)
-                </form>
-            </div>
+            <button id="myButton@(Model.ProductID)"
+                    asp-controller="Cart" asp-action="UpdateCartItem" asp-route-id="@Model.ProductID"
+                    class="buttonAddToCart btn btn-outline-dark mt-auto" type="submit">
+                Add to Cart
+            </button>
         </div>
     </div>
 </div>

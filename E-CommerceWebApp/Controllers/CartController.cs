@@ -21,12 +21,18 @@ namespace E_CommerceWebApp.Controllers
             _cartRepo.CreateNewCart();
         }
         [HttpPost]
-        public void UpdateCartItem(Product product)
+        public IActionResult UpdateCartItem(int id)
         {
-
-            _cartRepo.AddOrUpdateCartItem(product);
-
+            bool success = true;
+            try
+            {
+                _cartRepo.AddOrUpdateCartItem(id);
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+            return Json(new { success });
         }
-
     }
 }

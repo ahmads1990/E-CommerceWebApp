@@ -28,26 +28,26 @@ namespace E_CommerceWebApp.Services.Repositories
         {
            return _dbContext.CartItems.ToList();
         }
-        public void AddOrUpdateCartItem(Product product)
+        public void AddOrUpdateCartItem(int productID)
         {
             // Check if the entity already exists in the database
-            var existingCartItem = _dbContext.Set<CartItem>().FirstOrDefault(i => i.ProductID == product.ProductID);
+            var existingCartItem = _dbContext.Set<CartItem>().FirstOrDefault(i => i.ProductID == productID);
 
             if (existingCartItem == null)
             {
                 // The entity does not exist, so add it to the database
-                _dbContext.Set<CartItem>().Add(new CartItem 
+                _dbContext.Set<CartItem>().Add(new CartItem
                 {
-                    ProductID=product.ProductID,
-                    Amount=1,
-                    SinglePrice=product.Price,
-                    CartID=1,
+                    ProductID = productID,
+                    Amount = 1,
+                    SinglePrice = 0,
+                    CartID = 1,
                 });
             }
             else
             {
                 // The entity already exists, perform difference logic here
-                existingCartItem.Amount = +1;
+                existingCartItem.Amount += 1;
             }
 
             // Save changes to the database
@@ -62,8 +62,6 @@ namespace E_CommerceWebApp.Services.Repositories
         public void UpdateCartItem(int itemID)
         {
             throw new NotImplementedException();
-        }
-
-        
+        } 
     }
 }
