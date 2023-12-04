@@ -1,40 +1,49 @@
 ﻿<!-- _ProductPartial.cshtml -->
 @model Product
 @{
-    var imageWidth = "auto";
-    var imageHeight = 150;
+    var imageWidth = 100;
+    var imageHeight = "auto";
 }
-<div class="col mb-5">
-    <div class="card h-100">
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+    <div class="card w-100 my-2 shadow-2-strong">
         <!-- Sale badge-->
         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
         <!-- Product image-->
         @if (Model.ProductImage == null)
         {
-            <!-- Product image-->
-            <img width="@imageWidth" height="@imageHeight" object-fit="cover" ;class="card-img-top" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="..." />
+            <!-- Null from database send a dummy one-->
+            <img width="@(imageWidth)px" height="@(imageHeight)px" object-fit="cover"
+                class="card-img-top" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" 
+                alt="Image for Product @(Model.ProductName)"
+                style="aspect-ratio: 1 / 1" />
         }
         else
         {
-            <img width="@imageWidth" height="@imageHeight" object-fit="cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProductImage.ImageData))" class="img-thumbnail" alt="" />
+            <img width="@(imageWidth)px" height="@(imageHeight)px" object-fit="cover"
+                 class="card-img-top" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProductImage.ImageData))" 
+                 alt="Image for Product @(Model.ProductName)"
+                 style="aspect-ratio: 1 / 1" />
         }
         <!-- Product details-->
-        <div class="card-body p-4">
-            <div class="text-center">
+        <div class="card-body p-4 d-flex flex-column">
+            <div class="text-center card-text">
                 <!-- Product name-->
-                <h5 class="fw-bolder">@Model.ProductName</h5>
+                <h5 class="card-title fw-bold">@Model.ProductName</h5>
                 <!-- Product description-->
-                <h5>@Model.Description</h5>
+                @*<h5>@Model.Description</h5>*@
                 <!-- Product price-->
-                $@Model.Price
+                <p class="card-text fw-bold">$@Model.Price</p>
             </div>
         </div>
         <!-- Product actions-->
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <button id="myButton@(Model.ProductID)"
                     asp-controller="Cart" asp-action="UpdateCartItem" asp-route-id="@Model.ProductID"
-                    class="buttonAddToCart btn btn-outline-dark mt-auto" type="submit">
+                    class="buttonAddToCart btn btn-outline-dark mt-auto " type="submit">
                 Add to Cart
+            </button>
+            <button class=" btn btn-danger">
+                    <i class="bi bi-heart-fill"></i>
             </button>
         </div>
     </div>
