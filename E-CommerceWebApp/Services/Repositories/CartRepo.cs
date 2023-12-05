@@ -17,7 +17,7 @@ namespace E_CommerceWebApp.Services.Repositories
             var existingCartItem = GetCart(1);
             if (existingCartItem != null) return;
 
-            _dbContext.Carts.Add(new Cart { timeCreated = DateTime.Now });
+            _dbContext.Carts.Add(new Cart { TimeCreated = DateTime.Now });
             _dbContext.SaveChanges();
         }
         public Cart GetCart(int cartID)

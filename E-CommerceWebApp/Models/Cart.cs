@@ -3,9 +3,11 @@
     public class Cart
     {
         public int Id { get; set; }
-        //user to do
+        // user
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         // date
-        public DateTime timeCreated { get; set; }
-        public IEnumerable<CartItem> cartItems { get; set; }
+        public DateTime TimeCreated { get; set; }
+        public IEnumerable<CartItem> CartItems { get; set; }
     }
 }
