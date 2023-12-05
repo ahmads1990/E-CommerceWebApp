@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace E_CommerceWebApp.Controllers
 {
@@ -11,14 +14,18 @@ namespace E_CommerceWebApp.Controllers
             _cartRepo = cartRepo;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            var items = _cartRepo.GetAllCartItems();
-            return View(items);
-        }
-        public void CreateNewCart()
-        {
-            _cartRepo.CreateNewCart();
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            string userId = (userIdClaim != null) ? (string)userIdClaim.Value : null;
+
+            // check if user doesn't have a cart
+            if (_cartRepo.GetUserCart(userId) == null) RedirectToAction("", "Home");
+            // get user cart
+            var userCart = _cartRepo.GetCompleteUserCart(userId);
+
+            return View(userCart);
         }
         // for product card
         [HttpPost]

@@ -106,7 +106,7 @@ namespace E_CommerceWebApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceWebApp.Models.CartItem", b =>
@@ -135,7 +135,7 @@ namespace E_CommerceWebApp.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceWebApp.Models.Product", b =>
@@ -164,7 +164,7 @@ namespace E_CommerceWebApp.Migrations
 
                     b.HasIndex("ProductImageID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -214,7 +214,7 @@ namespace E_CommerceWebApp.Migrations
 
                     b.HasKey("ProductImageID");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImage", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

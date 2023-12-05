@@ -3,8 +3,9 @@
     public interface ICartRepo
     {
         // Cart
-        public void CreateNewCart();
-        public Cart GetCart(int cartID);
+        public Cart GetUserCart(string userID);
+        public Cart CreateUserCart(string userID);
+        public Cart GetCompleteUserCart(string userID);
         // CartItems
         public IEnumerable<CartItem> GetAllCartItems();
         public CartItem GetCartItemByID(int itemID);

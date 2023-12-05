@@ -15,18 +15,21 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace E_CommerceWebApp.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ICartRepo _cartRepo;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, ICartRepo cartRepo)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _cartRepo = cartRepo;
         }
 
         /// <summary>
@@ -115,6 +118,36 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+
+                    // ********* my code ***************
+                    // get the user information
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var claims = await _signInManager.UserManager.GetClaimsAsync(user);
+
+                    // if user has a IsAdmin claim
+                    var isAdminClaim = claims.FirstOrDefault(c => c.Type == "IsAdmin");
+                    if (isAdminClaim != null)
+                    {
+                        _logger.LogInformation("Admin logged in.");
+                        return RedirectToAction("", "Products");
+                    }
+                    // if user doesn't have a cartID claim on
+                    var cartIdClaim = claims.FirstOrDefault(c => c.Type == "CartId");
+                    if (cartIdClaim == null)
+                    {
+                        // get user id
+                        var userIdClaim = user.Id;
+                        // check if user does not have a cart
+                        var userCart = _cartRepo.GetUserCart(userIdClaim);
+                        if (userCart == null)
+                            // create new cart for user
+                            _cartRepo.CreateUserCart(userIdClaim);
+
+                        // create new claim for the user
+                        Claim userCartIDClaim = new Claim("CartId", userCart.Id.ToString());
+                        // add the claim to user
+                        await _signInManager.UserManager.AddClaimAsync(user, userCartIDClaim);
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
