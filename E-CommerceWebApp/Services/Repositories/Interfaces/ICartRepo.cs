@@ -5,12 +5,13 @@
         // Cart
         public Cart GetUserCart(string userID);
         public Cart CreateUserCart(string userID);
-        public Cart GetCompleteUserCart(string userID);
+        public Cart GetCompleteUserCart(int cartId);
         // CartItems
-        public IEnumerable<CartItem> GetAllCartItems();
-        public CartItem GetCartItemByID(int itemID);
-        public void AddOrUpdateCartItem(int productID);
-        public void UpdateCartItemAmount(int itemID, int amount);
-        public void RemoveCartItem(int itemID);
+        public IEnumerable<CartItem> GetAllCartItems(int cartId);
+        public CartItem GetCartItemByID(int itemId);
+        public void AddOrUpdateCartItem(int cartId, int productID);
+        // extra function used
+        public void UpdateCartItemAmount(int cartItemID, int amount);
+        public void RemoveCartItem(int cartItemID);
     }
 }

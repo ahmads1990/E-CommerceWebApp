@@ -33,31 +33,35 @@ namespace E_CommerceWebApp.Services.Repositories
             _dbContext.SaveChanges();
             return newCart;
         }
-        public Cart GetCompleteUserCart(string userID)
+        public Cart GetCompleteUserCart(int cartId)
         {
-            // checking if the user already have a cart
-            var existingCart = _dbContext.Carts
+            //  getting user cart and including all product data
+            var completeUserCart = _dbContext.Carts
+                                .Where(c => c.Id == cartId)
                                 .Include(c => c.CartItems)
-                                .ThenInclude(ci => ci.Product)
-                                .ThenInclude(p=>p.ProductImage)
-                                .FirstOrDefault(c => c.UserId == userID);
-            return existingCart;
+                                    .ThenInclude(ci => ci.Product)
+                                        .ThenInclude(p => p.ProductImage)
+                                .Single();
+
+            return completeUserCart;
         }
-        public IEnumerable<CartItem> GetAllCartItems()
+        public IEnumerable<CartItem> GetAllCartItems(int cartId)
         {
             return _dbContext.CartItems
-                 .Include(p => p.Product)
-                 .Include(im => im.Product.ProductImage)
+                .Where(ci => ci.CartID == cartId)
+                    .Include(p => p.Product)
+                        .ThenInclude(im => im.ProductImage)
                  .ToList();
         }
-        public CartItem GetCartItemByID(int itemID)
+        public CartItem GetCartItemByID(int itemId)
         {
-            return _dbContext.CartItems.FirstOrDefault(i => i.ID == itemID);
+            return _dbContext.CartItems.FirstOrDefault(i => i.ID == itemId);
         }
-        public void AddOrUpdateCartItem(int productID)
+        public void AddOrUpdateCartItem(int cartId, int productID)
         {
             // Check if the entity already exists in the database
-            var existingCartItem = _dbContext.Set<CartItem>().FirstOrDefault(i => i.ProductID == productID);
+            var existingCartItem = _dbContext.CartItems
+                                    .FirstOrDefault(i => i.ProductID == productID && i.CartID == cartId);
 
             if (existingCartItem == null)
             {
@@ -66,8 +70,8 @@ namespace E_CommerceWebApp.Services.Repositories
                 {
                     ProductID = productID,
                     Amount = 1,
-                    SinglePrice = 0,
-                    CartID = 1,
+                    SinglePrice = 0, // todo delete this prop
+                    CartID = cartId,
                 });
             }
             else
@@ -79,9 +83,9 @@ namespace E_CommerceWebApp.Services.Repositories
             _dbContext.SaveChanges();
         }
         // extra method for sending amount of products instead of increment by one
-        public void UpdateCartItemAmount(int itemID, int amount)
+        public void UpdateCartItemAmount(int cartItemID, int amount)
         {
-            var existingCartItem = GetCartItemByID(itemID);
+            var existingCartItem = GetCartItemByID(cartItemID);
             if (existingCartItem != null && amount >= 1)
             {
                 existingCartItem.Amount = amount;
@@ -89,10 +93,10 @@ namespace E_CommerceWebApp.Services.Repositories
                 _dbContext.SaveChanges();
             }
         }
-        public void RemoveCartItem(int itemID)
+        public void RemoveCartItem(int cartItemID)
         {
             // Check if the entity already exists in the database
-            var existingCartItem = GetCartItemByID(itemID);
+            var existingCartItem = GetCartItemByID(cartItemID);
             if (existingCartItem != null)
             {
                 _dbContext.CartItems.Remove(existingCartItem);

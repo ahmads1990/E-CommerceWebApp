@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using E_CommerceWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace E_CommerceWebApp.Controllers
 {
+    [Authorize]
+    [UserCartFilter]
     public class CartController : Controller
     {
         private readonly ICartRepo _cartRepo;
@@ -14,27 +17,21 @@ namespace E_CommerceWebApp.Controllers
             _cartRepo = cartRepo;
         }
 
-        [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(int cartId)
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            string userId = (userIdClaim != null) ? (string)userIdClaim.Value : null;
-
-            // check if user doesn't have a cart
-            if (_cartRepo.GetUserCart(userId) == null) RedirectToAction("", "Home");
             // get user cart
-            var userCart = _cartRepo.GetCompleteUserCart(userId);
+            var userCart = _cartRepo.GetCompleteUserCart(cartId);
 
             return View(userCart);
         }
         // for product card
         [HttpPost]
-        public IActionResult UpdateCartItem(int id)
+        public IActionResult UpdateCartItem(int id, int cartId)
         {
             bool success = true;
             try
             {
-                _cartRepo.AddOrUpdateCartItem(id);
+                _cartRepo.AddOrUpdateCartItem(cartId, id);
             }
             catch (Exception ex)
             {
