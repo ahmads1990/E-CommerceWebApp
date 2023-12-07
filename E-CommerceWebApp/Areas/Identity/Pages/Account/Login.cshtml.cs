@@ -119,29 +119,33 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    // ********* my code ***************
+                    // ****************************** my code ******************************
                     // get the user information
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     var claims = await _signInManager.UserManager.GetClaimsAsync(user);
 
-                    // if user has a IsAdmin claim
+                    // check if user has a IsAdmin claim
                     var isAdminClaim = claims.FirstOrDefault(c => c.Type == "IsAdmin");
                     if (isAdminClaim != null)
                     {
                         _logger.LogInformation("Admin logged in.");
                         return RedirectToAction("", "Products");
                     }
-                    // if user doesn't have a cartID claim on
+
+                    // check if user doesn't have a cartID claim on
                     var cartIdClaim = claims.FirstOrDefault(c => c.Type == "CartId");
                     if (cartIdClaim == null)
                     {
+                        // set a claim for the user 
                         // get user id
                         var userIdClaim = user.Id;
                         // check if user does not have a cart
                         var userCart = _cartRepo.GetUserCart(userIdClaim);
+
+                        // just incase
                         if (userCart == null)
                             // create new cart for user
-                            _cartRepo.CreateUserCart(userIdClaim);
+                            userCart = _cartRepo.CreateUserCart(userIdClaim);
 
                         // create new claim for the user
                         Claim userCartIDClaim = new Claim("CartId", userCart.Id.ToString());
