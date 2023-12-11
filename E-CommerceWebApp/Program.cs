@@ -32,6 +32,13 @@ builder.Services.AddScoped<ICartRepo, CartRepo>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<EmailServerSettings>(builder.Configuration.GetSection("EmailServerSettings"));
 
+// Security
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(CustomPolicies.canAccessAdmin,
+        policyBuilder => policyBuilder.RequireClaim(CustomClaims.IsAdmin));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
