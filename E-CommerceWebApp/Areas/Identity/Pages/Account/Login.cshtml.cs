@@ -125,7 +125,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                     var claims = await _signInManager.UserManager.GetClaimsAsync(user);
 
                     // check if user has a IsAdmin claim
-                    var isAdminClaim = claims.FirstOrDefault(c => c.Type == "IsAdmin");
+                    var isAdminClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.IsAdmin);
                     if (isAdminClaim != null)
                     {
                         _logger.LogInformation("Admin logged in.");
@@ -133,7 +133,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                     }
 
                     // check if user doesn't have a cartID claim on
-                    var cartIdClaim = claims.FirstOrDefault(c => c.Type == "CartId");
+                    var cartIdClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.CartId);
                     if (cartIdClaim == null)
                     {
                         // set a claim for the user 
@@ -148,7 +148,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                             userCart = _cartRepo.CreateUserCart(userIdClaim);
 
                         // create new claim for the user
-                        Claim userCartIDClaim = new Claim("CartId", userCart.Id.ToString());
+                        Claim userCartIDClaim = new Claim(CustomClaims.CartId, userCart.Id.ToString());
                         // add the claim to user
                         await _signInManager.UserManager.AddClaimAsync(user, userCartIDClaim);
                     }

@@ -6,3 +6,4 @@ global using E_CommerceWebApp.Services.Repositories.Interfaces;
 global using Microsoft.AspNetCore.Identity;
 
 global using E_CommerceWebApp.Filters;
+global using E_CommerceWebApp.Authorization;

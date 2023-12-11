@@ -12,7 +12,7 @@ namespace E_CommerceWebApp.Filters
             if (user != null)
             {
                 // try to get cart id claim
-                var userCartIDClaim = user.FindFirst("CartId")?.Value;
+                var userCartIDClaim = user.FindFirst(CustomClaims.CartId)?.Value;
 
                 int cartId;      
                 // if couldn't find the claim or couldn't read the claim value
