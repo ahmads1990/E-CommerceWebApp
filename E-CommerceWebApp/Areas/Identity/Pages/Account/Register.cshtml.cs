@@ -75,10 +75,26 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
             [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Gender")]
+            public bool GenderIsMale { get; set; }
+
+            [Required(ErrorMessage = "Birthdate is required.")]
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{dd-yyyy-MM}", ApplyFormatInEditMode = true)]
+            [Display(Name = "Birth Date")]
+            public DateTime BirthDate { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
