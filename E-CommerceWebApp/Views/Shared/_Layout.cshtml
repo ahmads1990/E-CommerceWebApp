@@ -35,18 +35,21 @@
                         <li class="nav-item"><a class="nav-link text-dark" asp-controller="Products" asp-action="">Products</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" href="#!">Categories</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" href="#!">Hot offers</a></li>
-                        <!-- Navbar dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Others</a>
-                            <!-- Dropdown menu -->
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-controller="Products" asp-action="">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                            </ul>
-                        </li>
+                        @if (!string.IsNullOrEmpty(User.Claims.FirstOrDefault(c => c.Type == CustomClaims.IsAdmin)?.Value))
+                        {
+                            <!-- Navbar dropdown -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Options</a>
+                                <!-- Dropdown menu -->
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Products" asp-action="">Manage Products</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                    <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     @* search bar *@
                     <form class="d-flex flex-grow-1 mx-5" role="search">
