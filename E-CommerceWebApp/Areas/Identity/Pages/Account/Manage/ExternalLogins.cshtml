@@ -14,7 +14,17 @@
             @foreach (var login in Model.CurrentLogins)
             {
                 <tr>
-                    <td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
+                    <td id="@($"login-provider-{login.LoginProvider}")">
+           
+                        @if (login.ProviderDisplayName == "Google")
+                        {
+                            <button type="button" class="btn btn-block btn-google" 
+                                    value="@login.ProviderDisplayName"
+                                    name="provider">
+                                <i class="bi bi-google"></i> Google
+                            </button>
+                        }
+                        </td>
                     <td>
                         @if (Model.ShowRemoveButton)
                         {
