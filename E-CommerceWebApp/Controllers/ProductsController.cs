@@ -1,10 +1,10 @@
 ﻿using E_CommerceWebApp.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Drawing.Printing;
 
 namespace E_CommerceWebApp.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductRepo _productRepo;
@@ -15,13 +15,13 @@ namespace E_CommerceWebApp.Controllers
             _imageService = imageService;
         }
 
-        // GET: Products
+        // GET: Products (pageNumber, pageSize)
         public IActionResult Index(int pageNumber = 1, int pageSize = 5)
         {
             int totalRecords = _productRepo.GetProductCount();
             int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
-            // checking
 
+            // checking
             if (pageNumber < 1) pageNumber = 1;
             else if (pageNumber > lastPage) pageNumber = lastPage;
             else if (pageSize > totalRecords) pageSize = totalRecords;
@@ -31,7 +31,25 @@ namespace E_CommerceWebApp.Controllers
             return View(new PagedViewModel<IEnumerable<Product>>
                             (products, pageNumber, pageSize, totalRecords));
         }
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: DisplayProducts (pageNumber, pageSize)
+        // this function is mainly for normal users
+        public IActionResult DisplayProducts(int pageNumber = 1, int pageSize = 10)
+        {
+            int totalRecords = _productRepo.GetProductCount();
+            int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
 
+            // checking
+            if (pageNumber < 1) pageNumber = 1;
+            else if (pageNumber > lastPage) pageNumber = lastPage;
+            else if (pageSize > totalRecords) pageSize = totalRecords;
+
+            var products = _productRepo.GetProductsWithPagination(pageNumber, pageSize);
+
+            return View(new PagedViewModel<IEnumerable<Product>>
+                            (products, pageNumber, pageSize, totalRecords));
+        }
         // GET: Products/Create
         public IActionResult Create()
         {
