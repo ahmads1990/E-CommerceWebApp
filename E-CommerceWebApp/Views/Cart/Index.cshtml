@@ -7,7 +7,7 @@
     var totalPrice = 0f;
 }
 
-<h1>Cart</h1>
+<h1>Your Shopping Cart</h1>
 
 @if (Model.CartItems?.Any() != true)
 {
@@ -58,8 +58,9 @@ else
                             @totalItemPrice
                         </td>
                         <td>
-                            <a class="btn btn-success" asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount+1)"><i class="bi bi-arrow-up-square"></i> Add</a> |
-                            <a class="btn btn-danger" asp-action="RemoveCartItem" asp-route-id="@item.ID"><i class="bi bi-arrow-down-square"></i> Remove One</a>
+                            <a class="btn btn-success" asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount+1)"><i class="bi bi-arrow-up-square"></i> More</a> |
+                            <a class="btn btn-warning" asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount-1)"><i class="bi bi-arrow-down-square"></i> Less</a> |
+                            <a class="btn btn-danger" asp-action="RemoveCartItem" asp-route-id="@item.ID"><i class="bi bi-x-square"></i> Remove</a>
                         </td>
                     </tr>
                 }
