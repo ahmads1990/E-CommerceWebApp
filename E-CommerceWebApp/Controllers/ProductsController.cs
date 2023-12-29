@@ -1,6 +1,7 @@
 ﻿using E_CommerceWebApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 
 namespace E_CommerceWebApp.Controllers
 {
@@ -15,10 +16,20 @@ namespace E_CommerceWebApp.Controllers
         }
 
         // GET: Products
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
         {
-            var products = _productRepo.GetAllProducts();
-            return View(products);
+            int totalRecords = _productRepo.GetProductCount();
+            int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
+            // checking
+
+            if (pageNumber < 1) pageNumber = 1;
+            else if (pageNumber > lastPage) pageNumber = lastPage;
+            else if (pageSize > totalRecords) pageSize = totalRecords;
+
+            var products = _productRepo.GetProductsWithPagination(pageNumber, pageSize);
+
+            return View(new PagedViewModel<IEnumerable<Product>>
+                            (products, pageNumber, pageSize, totalRecords));
         }
 
         // GET: Products/Create

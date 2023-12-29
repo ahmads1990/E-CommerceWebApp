@@ -8,7 +8,7 @@ namespace E_CommerceWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly IProductRepo _productRepo;
-
+        private const int defaultProductAmount = 20;
         public HomeController(IProductRepo productRepo)
         {
             _productRepo = productRepo;
@@ -16,7 +16,7 @@ namespace E_CommerceWebApp.Controllers
 
         public IActionResult Index()
         {
-            var products = _productRepo.GetAllProducts();
+            var products = _productRepo.GetProductsWithPagination(1, defaultProductAmount);
             var viewModel = new HomeViewModel { Products = products };
             return View(viewModel);
         }

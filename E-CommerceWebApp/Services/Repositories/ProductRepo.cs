@@ -16,6 +16,21 @@ namespace E_CommerceWebApp.Services.Repositories
                     .Include(p => p.ProductImage)
                     .ToList();
         }
+        public IEnumerable<Product> GetProductsWithPagination(int pageNumber, int pageSize)
+        {
+            int startingIndex = (pageNumber - 1) * pageSize;
+
+            return _dbContext.Products
+                    .Include(p => p.ProductImage)
+                    .OrderBy(p => p.ProductID)
+                    .Skip(startingIndex)
+                    .Take(pageSize)
+                    .ToList();
+        }
+        public int GetProductCount()
+        {
+            return _dbContext.Products.Count();
+        }
         public Product GetProductByID(int productID)
         {
             return _dbContext.Products.FirstOrDefault(p => p.ProductID == productID);
