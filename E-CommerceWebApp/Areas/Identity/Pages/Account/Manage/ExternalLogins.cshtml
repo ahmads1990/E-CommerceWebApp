@@ -15,16 +15,9 @@
             {
                 <tr>
                     <td id="@($"login-provider-{login.LoginProvider}")">
-           
-                        @if (login.ProviderDisplayName == "Google")
-                        {
-                            <button type="button" class="btn btn-block btn-google" 
-                                    value="@login.ProviderDisplayName"
-                                    name="provider">
-                                <i class="bi bi-google"></i> Google
-                            </button>
-                        }
-                        </td>
+
+                        @await Html.PartialAsync("_ExternalProvidersPartial", login.ProviderDisplayName)
+                    </td>
                     <td>
                         @if (Model.ShowRemoveButton)
                         {

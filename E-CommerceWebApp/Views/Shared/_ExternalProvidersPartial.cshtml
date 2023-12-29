@@ -1,0 +1,52 @@
+﻿@model string
+
+@if (Model == "Google")
+{
+    <div class="col-md-4 my-1">
+        <button type="submit" class="btn btn-block btn-google" value="@Model"
+                title="Log in using your @Model account" name="provider">
+
+            <i class="bi bi-google"></i> Google
+        </button>
+    </div>
+}
+else if (Model == "Facebook")
+{
+    <div class="col-md-4 my-1">
+        <button class="btn-block btn btn-facebook" type="submit" value="@Model"
+                title="Log in using your @Model account" name="provider">
+
+            <i class="fab fa-facebook fa-align-left social-icon"></i> Facebook
+        </button>
+    </div>
+}
+else if (Model == "Twitter")
+{
+    <div class="col-md-4 my-1">
+        <button class="btn-block btn btn-twitter" type="submit" value="@Model"
+                title="Log in using your @Model  account" name="provider">
+
+            <i class="fab fa-twitter fa-align-left social-icon"></i> Twitter
+        </button>
+    </div>
+}
+else if (Model == "Microsoft")
+{
+    <div class="col-md-4 my-1">
+        <button class="btn-block btn btn-microsoft" type="submit" value="@Model"
+                title="Log in using your @Model  account" name="provider">
+
+            <i class="fab fa-microsoft fa-align-left social-icon"></i> Microsoft
+        </button>
+    </div>
+}
+else
+{
+    <div class="col-md-4 my-1">
+        <button class="btn-block btn btn-linkedin" type="submit" name="provider"
+                value="@Model " title="Log in using your @Model  account">
+
+            <i class="fab fa-life-buoy fa-align-left social-icon"></i> Sign in with @Model
+        </button>
+    </div>
+}
