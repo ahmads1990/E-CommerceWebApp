@@ -8,8 +8,9 @@
         public int LastPage { get; set; }
         public int TotalPages { get; set; }
         public int TotalRecords { get; set; }
+        public string? SearchQuery { get; set; }
 
-        public PagedViewModel(T data, int pageNumber, int pageSize, int totalRecords)
+        public PagedViewModel(T data, int pageNumber, int pageSize, int totalRecords, string searchQuery)
         {
             Data = data;
             PageNumber = pageNumber;
@@ -17,6 +18,7 @@
             LastPage = (int)Math.Ceiling((double)totalRecords / PageSize);
             TotalPages = totalRecords;
             TotalRecords = totalRecords;
+            SearchQuery = searchQuery;
         }
     }
 }

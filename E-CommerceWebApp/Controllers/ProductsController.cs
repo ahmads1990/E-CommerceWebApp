@@ -15,7 +15,7 @@ namespace E_CommerceWebApp.Controllers
             _imageService = imageService;
         }
 
-        // GET: Products (pageNumber, pageSize)
+        // GET: Products/ (pageNumber, pageSize)
         public IActionResult Index(int pageNumber = 1, int pageSize = 5)
         {
             int totalRecords = _productRepo.GetProductCount();
@@ -26,16 +26,16 @@ namespace E_CommerceWebApp.Controllers
             else if (pageNumber > lastPage) pageNumber = lastPage;
             else if (pageSize > totalRecords) pageSize = totalRecords;
 
-            var products = _productRepo.GetProductsWithPagination(pageNumber, pageSize);
+            var products = _productRepo.GetProductsWithPagination(null, pageNumber, pageSize);
 
             return View(new PagedViewModel<IEnumerable<Product>>
-                            (products, pageNumber, pageSize, totalRecords));
+                            (products, pageNumber, pageSize, totalRecords, null));
         }
         [HttpGet]
         [AllowAnonymous]
-        // GET: DisplayProducts (pageNumber, pageSize)
+        // GET: Products/DisplayProducts (pageNumber, pageSize)
         // this function is mainly for normal users
-        public IActionResult DisplayProducts(int pageNumber = 1, int pageSize = 10)
+        public IActionResult DisplayProducts(string searchQuery, int pageNumber = 1, int pageSize = 10)
         {
             int totalRecords = _productRepo.GetProductCount();
             int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
@@ -45,10 +45,10 @@ namespace E_CommerceWebApp.Controllers
             else if (pageNumber > lastPage) pageNumber = lastPage;
             else if (pageSize > totalRecords) pageSize = totalRecords;
 
-            var products = _productRepo.GetProductsWithPagination(pageNumber, pageSize);
+            var products = _productRepo.GetProductsWithPagination(searchQuery, pageNumber, pageSize);
 
             return View(new PagedViewModel<IEnumerable<Product>>
-                            (products, pageNumber, pageSize, totalRecords));
+                            (products, pageNumber, pageSize, totalRecords, searchQuery));
         }
         // GET: Products/Create
         public IActionResult Create()

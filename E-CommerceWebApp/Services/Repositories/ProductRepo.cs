@@ -16,11 +16,18 @@ namespace E_CommerceWebApp.Services.Repositories
                     .Include(p => p.ProductImage)
                     .ToList();
         }
-        public IEnumerable<Product> GetProductsWithPagination(int pageNumber, int pageSize)
+        public IEnumerable<Product> GetProductsWithPagination(string searchQuery, int pageNumber, int pageSize)
         {
+            // start the query
+            var query = _dbContext.Products.AsQueryable();
+            // apply search by name query if existed
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(p => p.ProductName.Contains(searchQuery));
+            }
+            // paginate and return the result
             int startingIndex = (pageNumber - 1) * pageSize;
-
-            return _dbContext.Products
+            return query
                     .Include(p => p.ProductImage)
                     .OrderBy(p => p.ProductID)
                     .Skip(startingIndex)

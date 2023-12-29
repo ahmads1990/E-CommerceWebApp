@@ -11,11 +11,18 @@
             <h3>New products</h3>
         </header>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var product in Model.Data)
+            @if (Model.Data.Count() == 0)
             {
-                <!-- Render the partial view for each product -->
-                @await Html.PartialAsync("_ProductPartial", product)
-                ;
+                <div>Sorry there are no entries</div>
+            }
+            else
+            {
+                @foreach (var product in Model.Data)
+                {
+                    <!-- Render the partial view for each product -->
+                    @await Html.PartialAsync("_ProductPartial", product)
+                    ;
+                }
             }
         </div>
     </div>
@@ -26,12 +33,12 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="1" asp-route-pageSize="@pageSize" aria-label="First">
+                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="1" asp-route-pageSize="@pageSize" asp-route-searchQuery="@Model.SearchQuery" aria-label="First">
                         <span aria-hidden="true">&laquo;&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@pageSize" aria-label="Previous">
+                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@pageSize" asp-route-searchQuery="@Model.SearchQuery" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -39,12 +46,12 @@
                 <li class="page-item"><a class="page-link">@Model.PageNumber</a></li>
 
                 <li class="page-item">
-                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@pageSize" aria-label="Next">
+                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@pageSize" asp-route-searchQuery="@Model.SearchQuery" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@Model.LastPage" asp-route-pageSize="@pageSize" aria-label="Last">
+                    <a class="page-link" asp-action="@paginationAction" asp-route-pageNumber="@Model.LastPage" asp-route-pageSize="@pageSize" asp-route-searchQuery="@Model.SearchQuery" aria-label="Last">
                         <span aria-hidden="true">&raquo;&raquo;</span>
                     </a>
                 </li>
@@ -58,9 +65,9 @@
             </a>
 
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="10">10</a></li>
-                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="20">20</a></li>
-                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="50">50</a></li>
+                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageSize="10">10</a></li>
+                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageSize="20">20</a></li>
+                <li><a class="dropdown-item" asp-action="@paginationAction" asp-route-pageNumber="@Model.PageNumber" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageSize="50">50</a></li>
             </ul>
         </div>
 

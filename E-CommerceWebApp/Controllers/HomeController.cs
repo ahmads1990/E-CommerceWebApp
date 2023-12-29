@@ -16,7 +16,7 @@ namespace E_CommerceWebApp.Controllers
 
         public IActionResult Index()
         {
-            var products = _productRepo.GetProductsWithPagination(1, defaultProductAmount);
+            var products = _productRepo.GetProductsWithPagination(null, 1, defaultProductAmount);
             var viewModel = new HomeViewModel { Products = products };
             return View(viewModel);
         }
