@@ -2,54 +2,83 @@
 @{
     var imageWidth = "auto";
     var imageHeight = 100;
+
+    var totalAmountOfItems = 0f;
+    var totalPrice = 0f;
 }
 
 <h1>Cart</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(cart=>cart.CartItems.FirstOrDefault().Product.ProductImage)</th>
-            <th>@Html.DisplayNameFor(cart=>cart.CartItems.FirstOrDefault().Product.ProductName)</th>
-            <th>@Html.DisplayNameFor(cart=>cart.CartItems.FirstOrDefault().Product.Price)</th>
-            <th>@Html.DisplayNameFor(cart=>cart.CartItems.FirstOrDefault().Amount)</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.CartItems != null)
-        {
-            @foreach (var item in Model.CartItems)
+@if (Model.CartItems?.Any() != true)
+{
+    <h2>Empty cart</h2>
+    <a asp-controller="Products" asp-action="DisplayProducts">Click here to browse other products.</a>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(cart=>cart.CartItems.First().Product.ProductImage)</th>
+                <th>@Html.DisplayNameFor(cart=>cart.CartItems.First().Product.ProductName)</th>
+                <th>@Html.DisplayNameFor(cart=>cart.CartItems.First().Product.Price)</th>
+                <th>@Html.DisplayNameFor(cart=>cart.CartItems.First().Amount)</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.CartItems != null)
             {
-                <!-- Product image-->
-                <tr>
-                    <td>
-                        @if (item.Product.ProductImage == null)
-                        {
-                            @*if image is null load dummy image*@
-                            <img width="@imageWidth" height="@imageHeight" object-fit="cover"
-                            class="c" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg"
-                            alt="Image for product @(item.Product.ProductName)" />
-                        }
-                        else
-                        {
-                            <img width="@imageWidth" height="@imageHeight" object-fit="cover"
-                            class="c" src="data:image/*;base64,@(Convert.ToBase64String(item.Product.ProductImage.ImageData))"
-                            alt="Image for product @(item.Product.ProductName)" />
-                        }
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                    <td>@(
-                        item.Product.Price * item.Amount
-                        )</td>
-                    <td>
-                        <a asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount+1)">Add More</a> |
-                        <a asp-action="RemoveCartItem" asp-route-id="@item.ID">Remove</a>
-                    </td>
-                </tr>
+                @foreach (var item in Model.CartItems)
+                {
+                    var totalItemPrice = item.Product.Price * item.Amount;
+                    totalPrice += totalItemPrice;
+                    totalAmountOfItems += item.Amount;
+                    <!-- Product image-->
+                    <tr>
+                        <td>
+                            @if (item.Product.ProductImage == null)
+                            {
+                                @*if image is null load dummy image*@
+                                <img width="@imageWidth" height="@imageHeight" object-fit="cover"
+                                     class="c" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg"
+                                     alt="Image for product @(item.Product.ProductName)" />
+                            }
+                            else
+                            {
+                                <img width="@imageWidth" height="@imageHeight" object-fit="cover"
+                                     class="c" src="data:image/*;base64,@(Convert.ToBase64String(item.Product.ProductImage.ImageData))"
+                                     alt="Image for product @(item.Product.ProductName)" />
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td>
+                            @totalItemPrice
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-action="UpdateCartItemAmount" asp-route-itemID="@item.ID" asp-route-amount="@(item.Amount+1)"><i class="bi bi-arrow-up-square"></i> Add</a> |
+                            <a class="btn btn-danger" asp-action="RemoveCartItem" asp-route-id="@item.ID"><i class="bi bi-arrow-down-square"></i> Remove One</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+        
+    </table>
+    <div class="row">
+        <!-- Left -->
+        <div class="col-md-10">
+            <h2>Total Recipet</h2>
+            <span class="fw-bold"> Total Items: @totalAmountOfItems </span><br>
+            <span class="fw-bold"> Total Price: @totalPrice</span>
+        </div>
+
+        <!--  Right -->
+        <div class="col-md-2">
+            <a class="btn btn-primary"><i class="bi bi-bag-check"></i>CheckOut</a>
+        </div>
+    </div>
+
+}
