@@ -124,6 +124,9 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 // set new data
                 user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.BirthDate = Input.BirthDate;
+                user.GenderIsMale = Input.GenderIsMale;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
