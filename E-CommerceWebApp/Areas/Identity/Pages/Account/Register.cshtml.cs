@@ -92,7 +92,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Birthdate is required.")]
             [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{dd-yyyy-MM}", ApplyFormatInEditMode = true)]
+            //[DisplayFormat(DataFormatString = "{dd-yyyy-MM}", ApplyFormatInEditMode = true)]
             [Display(Name = "Birth Date")]
             public DateTime BirthDate { get; set; }
 
