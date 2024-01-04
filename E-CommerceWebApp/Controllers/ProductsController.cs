@@ -1,6 +1,9 @@
 ﻿using E_CommerceWebApp.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Controllers
 {
@@ -8,11 +11,13 @@ namespace E_CommerceWebApp.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductRepo _productRepo;
+        private readonly ICategoryRepo _categoryRepo;
         private readonly ImageService _imageService;
-        public ProductsController(IProductRepo productRepo, ImageService imageService)
+        public ProductsController(IProductRepo productRepo, ImageService imageService, ICategoryRepo categoryRepo)
         {
             _productRepo = productRepo;
             _imageService = imageService;
+            _categoryRepo = categoryRepo;
         }
 
         // GET: Products/ (pageNumber, pageSize)
@@ -53,7 +58,16 @@ namespace E_CommerceWebApp.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            return View();
+            var createProductViewModel = new CreateProductViewModel();
+            var categoryList = _categoryRepo.GetAllCategories();
+
+            createProductViewModel.Categories = categoryList.Select(
+                c => new SelectListItem { 
+                    Text = c.CategoryName, 
+                    Value = c.CategoryID.ToString() }
+                ).ToList();          
+
+            return View(createProductViewModel);
         }
 
         // POST: Products/Create

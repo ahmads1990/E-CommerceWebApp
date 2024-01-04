@@ -27,6 +27,7 @@ namespace E_CommerceWebApp.Services.Repositories
             }
             // paginate and return the result
             int startingIndex = (pageNumber - 1) * pageSize;
+            if (startingIndex < 0) return new List<Product>();
             return query
                     .Include(p => p.ProductImage)
                     .OrderBy(p => p.ProductID)
@@ -40,7 +41,9 @@ namespace E_CommerceWebApp.Services.Repositories
         }
         public Product GetProductByID(int productID)
         {
-            return _dbContext.Products.FirstOrDefault(p => p.ProductID == productID);
+            return _dbContext.Products
+                .Include(p=>p.Category)
+                .FirstOrDefault(p => p.ProductID == productID);
         }
         public void AddNewProduct(Product product)
         {
