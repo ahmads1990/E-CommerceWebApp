@@ -8,5 +8,8 @@
         public string ProductName { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
+        // nav prop
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

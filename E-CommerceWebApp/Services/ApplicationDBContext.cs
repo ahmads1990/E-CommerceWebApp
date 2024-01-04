@@ -10,6 +10,7 @@ namespace E_CommerceWebApp.Services
         }
         public DbSet<Product> Products { get; set; }
         //public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
@@ -21,6 +22,9 @@ namespace E_CommerceWebApp.Services
              new Product { ProductImage = null, ProductID = 2, ProductName = "Special Item", Description = "Special", Price = 80 },
              new Product { ProductImage = null, ProductID = 3, ProductName = "Sale Item", Description = "Sale", Price = 20 },
              new Product { ProductImage = null, ProductID = 4, ProductName = "Popular Item", Description = "Popular", Price = 100 }
+             );
+            modelBuilder.Entity<Category>().HasData(
+            new Category { CategoryID = 1, CategoryName = "TestCat" }
             );
             // Configure the ImageData property to be stored as binary data
             //modelBuilder.Entity<ProductImage>()

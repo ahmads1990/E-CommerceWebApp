@@ -1,0 +1,40 @@
+﻿@model IEnumerable<E_CommerceWebApp.Models.Category>
+@{
+}
+
+<h1>Category Management page</h1>
+
+<div class="row">
+    <div class="col">
+        <a type="button" class="btn btn-success" asp-action="Create"><i class="bi bi-plus-square"></i> Create New</a>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CategoryName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-info text-white" asp-action="Update" asp-route-id="@item.CategoryID"><i class="bi bi-pencil-square"></i> Update</a>
+                        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CategoryID"><i class="bi bi-trash"> Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
