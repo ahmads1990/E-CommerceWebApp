@@ -1,5 +1,6 @@
 # E-CommerceWebApp
-
+## Try live demo
+deployed this site on azure here is the link https://e-commercewebapp20231231132835.azurewebsites.net/
 ## Overview
 
 Welcome to E-CommerceWebApp – an e-commerce application built with ASP.NET, utilizing Identity for security and Entity Framework Core for data access. This project is currently under active development and production, providing a robust and secure platform for online commerce.
