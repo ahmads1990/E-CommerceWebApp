@@ -122,15 +122,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                     // ****************************** my code ******************************
                     // get the user information
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
-                    var claims = await _signInManager.UserManager.GetClaimsAsync(user);
-
-                    // check if user has a IsAdmin claim
-                    var isAdminClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.IsAdmin);
-                    if (isAdminClaim != null)
-                    {
-                        _logger.LogInformation("Admin logged in.");
-                        return RedirectToAction("", "Products");
-                    }
+                    var claims = await _signInManager.UserManager.GetClaimsAsync(user);                 
 
                     // check if user doesn't have a cartID claim on
                     var cartIdClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.CartId);
@@ -153,6 +145,15 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                         await _signInManager.UserManager.AddClaimAsync(user, userCartIDClaim);
                     }
                     _logger.LogInformation("User logged in.");
+
+                    // check if user has a IsAdmin claim
+                    var isAdminClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.IsAdmin);
+                    if (isAdminClaim != null)
+                    {
+                        _logger.LogInformation("Admin logged in.");
+                        return RedirectToAction("", "Products");
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
