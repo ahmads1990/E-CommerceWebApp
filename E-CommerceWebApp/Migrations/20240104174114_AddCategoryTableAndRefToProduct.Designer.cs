@@ -4,6 +4,7 @@ using E_CommerceWebApp.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240104174114_AddCategoryTableAndRefToProduct")]
+    partial class AddCategoryTableAndRefToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,6 +170,13 @@ namespace E_CommerceWebApp.Migrations
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "TestCat"
+                        });
                 });
 
             modelBuilder.Entity("E_CommerceWebApp.Models.Product", b =>
@@ -201,6 +211,40 @@ namespace E_CommerceWebApp.Migrations
                     b.HasIndex("ProductImageID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductID = 1,
+                            CategoryId = 0,
+                            Description = "Fancy",
+                            Price = 40f,
+                            ProductName = "Fancy Product"
+                        },
+                        new
+                        {
+                            ProductID = 2,
+                            CategoryId = 0,
+                            Description = "Special",
+                            Price = 80f,
+                            ProductName = "Special Item"
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            CategoryId = 0,
+                            Description = "Sale",
+                            Price = 20f,
+                            ProductName = "Sale Item"
+                        },
+                        new
+                        {
+                            ProductID = 4,
+                            CategoryId = 0,
+                            Description = "Popular",
+                            Price = 100f,
+                            ProductName = "Popular Item"
+                        });
                 });
 
             modelBuilder.Entity("E_CommerceWebApp.Models.ProductImage", b =>

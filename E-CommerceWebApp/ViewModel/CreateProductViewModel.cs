@@ -1,4 +1,6 @@
-﻿namespace E_CommerceWebApp.ViewModel
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace E_CommerceWebApp.ViewModel
 {
     public class CreateProductViewModel
     {
@@ -8,8 +10,11 @@
         public string ProductName { get; set; }
         public string Description { get; set; }
         [Required]
+        public string SelectedCategoryID { get; set; }
+        [Required]
         public float Price { get; set; }
-
+        // for user to select
+        public List<SelectListItem>? Categories { get; set; }
         public Product toProduct()
         {
             byte[] productImageBytes = null;
@@ -27,7 +32,8 @@
                 ProductName = ProductName,
                 Description = Description,
                 Price = Price,
-                ProductImage = new ProductImage { CreatedAt = DateTime.Now, ImageData = productImageBytes }
+                ProductImage = new ProductImage { CreatedAt = DateTime.Now, ImageData = productImageBytes },
+                CategoryId = int.Parse(SelectedCategoryID)
             };
         }
     }

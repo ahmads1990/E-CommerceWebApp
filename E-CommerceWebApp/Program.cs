@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using E_CommerceWebApp.Services;
 using E_CommerceWebApp.Models.Email;
 using System.Configuration;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -31,6 +30,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 //DP
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddSingleton<ImageService>();
+builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 
 builder.Services.AddScoped<ICartRepo, CartRepo>();
 
