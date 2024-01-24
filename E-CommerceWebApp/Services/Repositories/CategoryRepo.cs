@@ -28,23 +28,38 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             throw new NotImplementedException();
         }
-        // Create
-        public async Task<Category> AddNewCategoryAsync(Category category)
+        public async Task<bool> CheckCategoryExistAsync(int id)
         {
-            var createdCategory = await _dbContext.Categories.AddAsync(category);
+            return await _dbContext.Categories.AnyAsync(c => c.CategoryID == id);
+        }
+        // Create
+        public async Task<Category> AddNewCategoryAsync(Category newCategory)
+        {
+            if (newCategory == null || string.IsNullOrEmpty(newCategory.CategoryName))
+                throw new ArgumentException("Invalid category data.");
+
+            if (newCategory.CategoryID != 0)
+                throw new ArgumentException("Invalid category ID.");
+
+            var createdCategory = await _dbContext.Categories.AddAsync(newCategory);
             await _dbContext.SaveChangesAsync();
+
             return createdCategory.Entity;
         }
         // Update
         public async Task<Category> UpdateCategoryAsync(Category category)
         {
-            var findCategory = await GetCategoryWithIDAsync(category.CategoryID);
-            if (findCategory == null)
-            {
-                return null;
-            }
+            if (category == null || string.IsNullOrEmpty(category.CategoryName))
+                throw new ArgumentException("Invalid category data.");
+
+            if (category.CategoryID <= 0)
+                throw new ArgumentException("Invalid category ID.");
+
+            if (!await CheckCategoryExistAsync(category.CategoryID)) return null;
+
             var updatedCategory = _dbContext.Categories.Update(category);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
+
             return updatedCategory.Entity;
         }
         // Delete

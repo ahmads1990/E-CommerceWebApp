@@ -7,6 +7,7 @@
         public Task<Category> GetCategoryWithNameAsync(string categoryName);
         public Task<IEnumerable<Category>> GetAllCategoriesAsync();
         public Task<IEnumerable<Category>> GetCategoriesWithPaginationAsync(string searchQuery, int pageNumber, int pageSize);
+        public Task<bool> CheckCategoryExistAsync(int id);
         // Create
         public Task<Category> AddNewCategoryAsync(Category category);
         // Update
