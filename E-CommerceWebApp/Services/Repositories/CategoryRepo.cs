@@ -10,14 +10,16 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             _dbContext = dbContext;
         }
-        public Category GetCategoryWithName(string categoryName)
-        {
-            return _dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName);
-        }
+        // Read
         public Category GetCategoryWithID(int categoryID)
         {
             return _dbContext.Categories.FirstOrDefault(c => c.CategoryID == categoryID);
         }
+        public Category GetCategoryWithName(string categoryName)
+        {
+            return _dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName);
+        }
+      
         public IEnumerable<Category> GetAllCategories()
         {
             return _dbContext.Categories.ToList();
@@ -26,18 +28,21 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             throw new NotImplementedException();
         }
+        // Create
         public Category AddNewCategory(Category category)
         {
             var createdCategory = _dbContext.Categories.Add(category);
             _dbContext.SaveChanges();
             return createdCategory.Entity;
         }
+        // Update
         public Category UpdateCategory(Category category)
         {
             var updatedCategory = _dbContext.Categories.Update(category);
             _dbContext.SaveChanges();
             return updatedCategory.Entity;
         }
+        // Delete
         public Category DeleteCategory(int categoryID)
         {
             var existingCategory = GetCategoryWithID(categoryID);
