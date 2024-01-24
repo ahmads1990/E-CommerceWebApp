@@ -32,10 +32,10 @@ namespace E_CommerceWebApp.Controllers
         {
             try
             {
-                if (_categoryRepo.GetCategoryWithName(category.CategoryName) != null)
+                if (_categoryRepo.GetCategoryWithNameAsync(category.CategoryName) != null)
                     return View(category);
 
-                _categoryRepo.AddNewCategory(category);
+                _categoryRepo.AddNewCategoryAsync(category);
                 // return to index
                 return RedirectToAction(nameof(Index));
             }
@@ -48,7 +48,7 @@ namespace E_CommerceWebApp.Controllers
         // GET: CategoryController/Update/5
         public ActionResult Update(int id)
         {
-            var product = _categoryRepo.GetCategoryWithID(id);
+            var product = _categoryRepo.GetCategoryWithIDAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -63,7 +63,7 @@ namespace E_CommerceWebApp.Controllers
         {
             try
             {
-                _categoryRepo.UpdateCategory(category);
+                _categoryRepo.UpdateCategoryAsync(category);
             }
             catch (Exception)
             {
@@ -76,7 +76,7 @@ namespace E_CommerceWebApp.Controllers
         // Get: CategoryController/Delete/5
         public ActionResult Delete(int id)
         {
-            _categoryRepo.DeleteCategory(id);
+            _categoryRepo.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

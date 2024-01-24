@@ -1,5 +1,6 @@
 ﻿using E_CommerceWebApp.Models;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services.Repositories
 {
@@ -11,48 +12,52 @@ namespace E_CommerceWebApp.Services.Repositories
             _dbContext = dbContext;
         }
         // Read
-        public Category GetCategoryWithID(int categoryID)
+        public async Task<Category> GetCategoryWithIDAsync(int categoryID)
         {
-            return _dbContext.Categories.FirstOrDefault(c => c.CategoryID == categoryID);
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryID == categoryID);
         }
-        public Category GetCategoryWithName(string categoryName)
+        public async Task<Category> GetCategoryWithNameAsync(string categoryName)
         {
-            return _dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName);
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
         }
-      
+
         public IEnumerable<Category> GetAllCategories()
         {
             return _dbContext.Categories.ToList();
         }
-        public IEnumerable<Category> GetCategoriesWithPagination(string searchQuery, int pageNumber, int pageSize)
+        public Task<IEnumerable<Category>> GetCategoriesWithPaginationAsync(string searchQuery, int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
         }
         // Create
-        public Category AddNewCategory(Category category)
+        public async Task<Category> AddNewCategoryAsync(Category category)
         {
-            var createdCategory = _dbContext.Categories.Add(category);
-            _dbContext.SaveChanges();
+            var createdCategory = await _dbContext.Categories.AddAsync(category);
+            await _dbContext.SaveChangesAsync();
             return createdCategory.Entity;
         }
         // Update
-        public Category UpdateCategory(Category category)
+        public async Task<Category> UpdateCategoryAsync(Category category)
         {
+            var findCategory = await GetCategoryWithIDAsync(category.CategoryID);
+            if (findCategory == null)
+            {
+                return null;
+            }
             var updatedCategory = _dbContext.Categories.Update(category);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return updatedCategory.Entity;
         }
         // Delete
-        public Category DeleteCategory(int categoryID)
+        public async Task<Category> DeleteCategoryAsync(int categoryID)
         {
-            var existingCategory = GetCategoryWithID(categoryID);
+            var existingCategory = await GetCategoryWithIDAsync(categoryID);
             if (existingCategory != null)
             {
                 _dbContext.Categories.Remove(existingCategory);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             return existingCategory;
         }
-
     }
 }

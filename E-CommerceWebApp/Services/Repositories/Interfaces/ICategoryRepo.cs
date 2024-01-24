@@ -3,15 +3,15 @@
     public interface ICategoryRepo
     {
         // Read
-        public Category GetCategoryWithID(int categoryID);
-        public Category GetCategoryWithName(string categoryName);
+        public Task<Category> GetCategoryWithIDAsync(int categoryID);
+        public Task<Category> GetCategoryWithNameAsync(string categoryName);
         public IEnumerable<Category> GetAllCategories();
-        public IEnumerable<Category> GetCategoriesWithPagination(string searchQuery, int pageNumber, int pageSize);
+        public Task<IEnumerable<Category>> GetCategoriesWithPaginationAsync(string searchQuery, int pageNumber, int pageSize);
         // Create
-        public Category AddNewCategory(Category category);
+        public Task<Category> AddNewCategoryAsync(Category category);
         // Update
-        public Category UpdateCategory(Category category);
+        public Task<Category> UpdateCategoryAsync(Category category);
         // Delete
-        public Category DeleteCategory(int categoryID);
+        public Task<Category> DeleteCategoryAsync(int categoryID);
     }
 }
