@@ -50,13 +50,17 @@ namespace E_CommerceWebApp.Services.Repositories
         // Delete
         public async Task<Category> DeleteCategoryAsync(int categoryID)
         {
-            var existingCategory = await GetCategoryWithIDAsync(categoryID);
-            if (existingCategory != null)
-            {
-                _dbContext.Categories.Remove(existingCategory);
-                await _dbContext.SaveChangesAsync();
-            }
-            return existingCategory;
+            if (categoryID <= 0)
+                throw new ArgumentException("Invalid category ID.");
+
+            var category = await GetCategoryWithIDAsync(categoryID);
+
+            if (category is null) return null;
+
+            var deletedCategory = _dbContext.Categories.Remove(category);
+            _dbContext.SaveChanges();
+
+            return deletedCategory.Entity;
         }
     }
 }
