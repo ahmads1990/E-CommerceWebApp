@@ -21,9 +21,9 @@ namespace E_CommerceWebApp.Services.Repositories
             return await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return _dbContext.Categories.ToList();
+            return await _dbContext.Categories.ToListAsync();
         }
         public Task<IEnumerable<Category>> GetCategoriesWithPaginationAsync(string searchQuery, int pageNumber, int pageSize)
         {

@@ -15,7 +15,7 @@ namespace E_CommerceWebApp.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
-            var data = _categoryRepo.GetAllCategories();
+            var data = _categoryRepo.GetAllCategoriesAsync();
             return View(data);
         }
 

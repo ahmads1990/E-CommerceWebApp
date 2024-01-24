@@ -56,10 +56,10 @@ namespace E_CommerceWebApp.Controllers
                             (products, pageNumber, pageSize, totalRecords, searchQuery));
         }
         // GET: Products/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var createProductViewModel = new CreateProductViewModel();
-            var categoryList = _categoryRepo.GetAllCategories();
+            var categoryList = await _categoryRepo.GetAllCategoriesAsync();
 
             createProductViewModel.Categories = categoryList.Select(
                 c => new SelectListItem { 
