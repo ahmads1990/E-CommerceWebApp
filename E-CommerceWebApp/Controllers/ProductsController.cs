@@ -19,9 +19,9 @@ namespace E_CommerceWebApp.Controllers
         }
 
         // GET: Products/ (pageNumber, pageSize)
-        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-            int totalRecords = _productRepo.GetProductCount();
+            int totalRecords = await _productRepo.GetProductCountAsync();
             int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
 
             // checking
@@ -29,7 +29,7 @@ namespace E_CommerceWebApp.Controllers
             else if (pageNumber > lastPage) pageNumber = lastPage;
             else if (pageSize > totalRecords) pageSize = totalRecords;
 
-            var products = _productRepo.GetProductsWithPagination(null, pageNumber, pageSize);
+            var products = await _productRepo.GetProductsWithPaginationAsync(null, pageNumber, pageSize);
 
             return View(new PagedViewModel<IEnumerable<Product>>
                             (products, pageNumber, pageSize, totalRecords, null));
@@ -38,9 +38,9 @@ namespace E_CommerceWebApp.Controllers
         [AllowAnonymous]
         // GET: Products/DisplayProducts (pageNumber, pageSize)
         // this function is mainly for normal users
-        public IActionResult DisplayProducts(string searchQuery, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> DisplayProducts(string searchQuery, int pageNumber = 1, int pageSize = 10)
         {
-            int totalRecords = _productRepo.GetProductCount();
+            int totalRecords = await _productRepo.GetProductCountAsync();
             int lastPage = (int)Math.Ceiling((double)totalRecords / pageSize);
 
             // checking
@@ -48,7 +48,7 @@ namespace E_CommerceWebApp.Controllers
             else if (pageNumber > lastPage) pageNumber = lastPage;
             else if (pageSize > totalRecords) pageSize = totalRecords;
 
-            var products = _productRepo.GetProductsWithPagination(searchQuery, pageNumber, pageSize);
+            var products = await _productRepo.GetProductsWithPaginationAsync(searchQuery, pageNumber, pageSize);
 
             return View(new PagedViewModel<IEnumerable<Product>>
                             (products, pageNumber, pageSize, totalRecords, searchQuery));
@@ -73,7 +73,7 @@ namespace E_CommerceWebApp.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateProductViewModel createProductViewModel)
+        public async Task<IActionResult> Create(CreateProductViewModel createProductViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -85,23 +85,23 @@ namespace E_CommerceWebApp.Controllers
 
                 // Add new Product
                 var newProduct = createProductViewModel.toProduct();
-                _productRepo.AddNewProduct(newProduct);
+                await _productRepo.AddNewProductAsync(newProduct);
                 // return to index
                 return RedirectToAction(nameof(Index));
             }
             return View(createProductViewModel);
         }
         // GET: Products/Details/5
-        public IActionResult Details(int productID)
+        public async Task<IActionResult> Details(int productID)
         {
-            var product = _productRepo.GetProductByID(productID);
+            var product = await _productRepo.GetProductByIDAsync(productID);
 
             return View(product);
         }
         [HttpGet]
-        public IActionResult Update(int productID)
+        public async Task<IActionResult> Update(int productID)
         {
-            var product = _productRepo.GetProductByID(productID);
+            var product = await _productRepo.GetProductByIDAsync(productID);
             if (product == null)
             {
                 return NotFound();
@@ -110,24 +110,22 @@ namespace E_CommerceWebApp.Controllers
         }
         // Post: Products/Update/5
         [HttpPost]
-        public IActionResult Update(Product product)
+        public async Task<IActionResult> Update(Product product)
         {
             try
             {
-                _productRepo.UpdateProduct(product);
-
+                await _productRepo.UpdateProductAsync(product);
             }
             catch (Exception)
             {
-
                 throw;
             }
             return RedirectToAction(nameof(Index));
         }
         // Post: Products/Delete/5
-        public IActionResult Delete(int productID)
+        public async Task<IActionResult> Delete(int productID)
         {
-            _productRepo.DeleteProduct(productID);
+            await _productRepo.DeleteProductAsync(productID);
             return RedirectToAction(nameof(Index));
         }
     }

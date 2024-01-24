@@ -74,7 +74,7 @@ namespace E_CommerceWebApp.Tests
             // Arrange
             productRepo = new ProductRepo(dbContext);
             // Act
-            var result = productRepo.GetAllProducts();
+            var result = productRepo.GetAllProductsAsync();
             // Assert
             Assert.That(result, Is.Not.Null);
         }
@@ -84,7 +84,7 @@ namespace E_CommerceWebApp.Tests
             int productId = 100; // ensured in seed data
             productRepo = new ProductRepo(dbContext);
 
-            var result = productRepo.GetProductByID(productId);
+            var result = productRepo.GetProductByIDAsync(productId);
 
             Assert.That(result.ProductID, Is.EqualTo(productId));
         }
@@ -95,7 +95,7 @@ namespace E_CommerceWebApp.Tests
         {
             productRepo = new ProductRepo(dbContext);
 
-            return productRepo.GetProductByID(id);      
+            return productRepo.GetProductByIDAsync(id);      
         }
         [Test]
         public void AddNewProduct_ValidProduct_Pass()
@@ -110,7 +110,7 @@ namespace E_CommerceWebApp.Tests
                 Description = "product Description"
             };
 
-            productRepo.AddNewProduct(product);
+            productRepo.AddNewProductAsync(product);
         }
         [Test]
         public void AddNewProduct_InValidProduct_FailOnNullName()
@@ -125,7 +125,7 @@ namespace E_CommerceWebApp.Tests
                 Description = "product Description"
             };
 
-            Assert.Throws<DbUpdateException>(() => productRepo.AddNewProduct(product));
+            Assert.Throws<DbUpdateException>(() => productRepo.AddNewProductAsync(product));
         }
         [Test]
         public void UpdateProduct_ValidProduct_Pass()
@@ -141,7 +141,7 @@ namespace E_CommerceWebApp.Tests
                 Description = "product Description"
             };
 
-            Assert.DoesNotThrow(() => productRepo.UpdateProduct(product));
+            Assert.DoesNotThrow(() => productRepo.UpdateProductAsync(product));
         }
     }
 }

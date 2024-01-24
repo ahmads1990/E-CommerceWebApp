@@ -9,13 +9,13 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             _dbContext = dbContext;
         }
-        public IEnumerable<Product> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return _dbContext.Products
-                    .Include(p => p.ProductImage)
-                    .ToList();
+            return await _dbContext.Products
+                        .Include(p => p.ProductImage)
+                        .ToListAsync();
         }
-        public IEnumerable<Product> GetProductsWithPagination(string searchQuery, int pageNumber, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductsWithPaginationAsync(string searchQuery, int pageNumber, int pageSize)
         {
             // start the query
             var query = _dbContext.Products.AsQueryable();
@@ -27,40 +27,40 @@ namespace E_CommerceWebApp.Services.Repositories
             // paginate and return the result
             int startingIndex = (pageNumber - 1) * pageSize;
             if (startingIndex < 0) return new List<Product>();
-            return query
-                    .Include(p => p.ProductImage)
-                    .OrderBy(p => p.ProductID)
-                    .Skip(startingIndex)
-                    .Take(pageSize)
-                    .ToList();
+            return await query
+                        .Include(p => p.ProductImage)
+                        .OrderBy(p => p.ProductID)
+                        .Skip(startingIndex)
+                        .Take(pageSize)
+                        .ToListAsync();
         }
-        public int GetProductCount()
+        public async Task<int> GetProductCountAsync()
         {
-            return _dbContext.Products.Count();
+            return await _dbContext.Products.CountAsync();
         }
-        public Product GetProductByID(int productID)
+        public async Task<Product> GetProductByIDAsync(int productID)
         {
-            return _dbContext.Products
-                .Include(p => p.Category)
-                .FirstOrDefault(p => p.ProductID == productID);
+            return await _dbContext.Products
+                    .Include(p => p.Category)
+                    .FirstOrDefaultAsync(p => p.ProductID == productID);
         }
-        public void AddNewProduct(Product product)
+        public async Task AddNewProductAsync(Product product)
         {
-            _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
+            _dbContext.Products.AddAsync(product);
+            await _dbContext.SaveChangesAsync();
         }
-        public void UpdateProduct(Product product)
+        public async Task UpdateProductAsync(Product product)
         {
             _dbContext.Products.Update(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void DeleteProduct(int productID)
+        public async Task DeleteProductAsync(int productID)
         {
-            var existingProduct = GetProductByID(productID);
+            var existingProduct = await GetProductByIDAsync(productID);
             if (existingProduct != null)
             {
                 _dbContext.Products.Remove(existingProduct);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
     }
