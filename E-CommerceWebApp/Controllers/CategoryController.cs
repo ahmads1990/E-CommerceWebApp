@@ -13,9 +13,9 @@ namespace E_CommerceWebApp.Controllers
             _categoryRepo = categoryRepo;
         }
         // GET: CategoryController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var data = _categoryRepo.GetAllCategoriesAsync();
+            var data = await _categoryRepo.GetAllCategoriesAsync();
             return View(data);
         }
 
@@ -28,14 +28,14 @@ namespace E_CommerceWebApp.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public async Task<ActionResult> Create(Category category)
         {
             try
             {
-                if (_categoryRepo.GetCategoryWithNameAsync(category.CategoryName) != null)
+                if (await _categoryRepo.GetCategoryWithNameAsync(category.CategoryName) != null)
                     return View(category);
 
-                _categoryRepo.AddNewCategoryAsync(category);
+                await _categoryRepo.AddNewCategoryAsync(category);
                 // return to index
                 return RedirectToAction(nameof(Index));
             }
@@ -46,9 +46,9 @@ namespace E_CommerceWebApp.Controllers
         }
 
         // GET: CategoryController/Update/5
-        public ActionResult Update(int id)
+        public async Task<ActionResult> Update(int id)
         {
-            var product = _categoryRepo.GetCategoryWithIDAsync(id);
+            var product = await _categoryRepo.GetCategoryWithIDAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -59,11 +59,11 @@ namespace E_CommerceWebApp.Controllers
         // POST: CategoryController/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(int id, Category category)
+        public async Task<ActionResult> Update(int id, Category category)
         {
             try
             {
-                _categoryRepo.UpdateCategoryAsync(category);
+                await _categoryRepo.UpdateCategoryAsync(category);
             }
             catch (Exception)
             {
@@ -74,9 +74,9 @@ namespace E_CommerceWebApp.Controllers
         }
 
         // Get: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            _categoryRepo.DeleteCategoryAsync(id);
+            await _categoryRepo.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
