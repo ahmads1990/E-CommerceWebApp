@@ -1,5 +1,4 @@
-﻿using E_CommerceWebApp.Models;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services.Repositories

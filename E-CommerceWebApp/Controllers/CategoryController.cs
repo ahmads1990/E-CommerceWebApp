@@ -1,7 +1,4 @@
-﻿using E_CommerceWebApp.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace E_CommerceWebApp.Controllers
 {

@@ -1,8 +1,5 @@
-﻿using E_CommerceWebApp.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace E_CommerceWebApp.Controllers
 {

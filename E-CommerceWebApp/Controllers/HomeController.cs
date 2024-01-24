@@ -1,5 +1,4 @@
-﻿using E_CommerceWebApp.Models;
-using E_CommerceWebApp.ViewModel;
+﻿using E_CommerceWebApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

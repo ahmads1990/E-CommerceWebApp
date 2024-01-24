@@ -32,10 +32,10 @@ namespace E_CommerceWebApp.Services
                     if (result.Succeeded)
                     {
                         var claimResult = await userManager.AddClaimAsync(defaultAdminUser, new Claim(CustomClaims.IsAdmin, "admin"));
-                        
-                        if (claimResult.Succeeded)                       
+
+                        if (claimResult.Succeeded)
                             Console.WriteLine("Claim 'IsAdmin' added to the default user.");
-                        
+
                         else
                             Console.WriteLine("Error adding claim to the default user.");
                     }

@@ -2,19 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using E_CommerceWebApp.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace E_CommerceWebApp.Areas.Identity.Pages.Account
@@ -122,7 +112,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account
                     // ****************************** my code ******************************
                     // get the user information
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
-                    var claims = await _signInManager.UserManager.GetClaimsAsync(user);                 
+                    var claims = await _signInManager.UserManager.GetClaimsAsync(user);
 
                     // check if user doesn't have a cartID claim on
                     var cartIdClaim = claims.FirstOrDefault(c => c.Type == CustomClaims.CartId);

@@ -1,5 +1,4 @@
-﻿using E_CommerceWebApp.Services.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services.Repositories
 {
@@ -42,7 +41,7 @@ namespace E_CommerceWebApp.Services.Repositories
         public Product GetProductByID(int productID)
         {
             return _dbContext.Products
-                .Include(p=>p.Category)
+                .Include(p => p.Category)
                 .FirstOrDefault(p => p.ProductID == productID);
         }
         public void AddNewProduct(Product product)

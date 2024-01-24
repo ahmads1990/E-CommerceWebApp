@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Controllers
 {
@@ -62,10 +60,12 @@ namespace E_CommerceWebApp.Controllers
             var categoryList = await _categoryRepo.GetAllCategoriesAsync();
 
             createProductViewModel.Categories = categoryList.Select(
-                c => new SelectListItem { 
-                    Text = c.CategoryName, 
-                    Value = c.CategoryID.ToString() }
-                ).ToList();          
+                c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.CategoryID.ToString()
+                }
+                ).ToList();
 
             return View(createProductViewModel);
         }
@@ -73,11 +73,11 @@ namespace E_CommerceWebApp.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateProductViewModel createProductViewModel) 
+        public IActionResult Create(CreateProductViewModel createProductViewModel)
         {
             if (ModelState.IsValid)
             {
-                if(!_imageService.CheckImage(createProductViewModel.ProductImage)) 
+                if (!_imageService.CheckImage(createProductViewModel.ProductImage))
                 {
                     //return error
                     return View(createProductViewModel);
@@ -125,9 +125,9 @@ namespace E_CommerceWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
         // Post: Products/Delete/5
-        public  IActionResult Delete(int productID)
+        public IActionResult Delete(int productID)
         {
-            _productRepo.DeleteProduct(productID); 
+            _productRepo.DeleteProduct(productID);
             return RedirectToAction(nameof(Index));
         }
     }
