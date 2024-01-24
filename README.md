@@ -1,6 +1,6 @@
 # E-Commerce Website 🛒
 
-Online store solution to sell my Funko Pops 😎, 🎉 Using Asp.net MVC and Razor. The cool part? It's a work in progress, always getting better with new features.
+Online store solution to sell Funko Pops 😎, 🎉 Using Asp.net MVC and Razor. The cool part? It's a work in progress, always getting better with new features.
 Feel free to check out this documentation or live development on Azure.
 
 ## Quick start
