@@ -79,12 +79,12 @@ namespace E_CommerceWebApp.Tests
             Assert.That(result, Is.Not.Null);
         }
         [Test]
-        public void GetProductByID_ValidID_ReturnProduct()
+        public async Task GetProductByID_ValidID_ReturnProductAsync()
         {
             int productId = 100; // ensured in seed data
             productRepo = new ProductRepo(dbContext);
 
-            var result = productRepo.GetProductByIDAsync(productId);
+            var result = await productRepo.GetProductByIDAsync(productId);
 
             Assert.That(result.ProductID, Is.EqualTo(productId));
         }
