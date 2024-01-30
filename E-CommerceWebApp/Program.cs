@@ -27,6 +27,7 @@ builder.Services.AddSingleton<ImageService>();
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 
 builder.Services.AddScoped<ICartRepo, CartRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<EmailServerSettings>(builder.Configuration.GetSection("EmailServerSettings"));

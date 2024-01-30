@@ -19,6 +19,7 @@
         Confirming,
         Shipping,
         Delayed,
+        Cancelled,
         Delivered
     }
 }
