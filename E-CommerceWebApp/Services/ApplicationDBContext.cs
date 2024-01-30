@@ -13,7 +13,8 @@ namespace E_CommerceWebApp.Services
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -21,6 +22,10 @@ namespace E_CommerceWebApp.Services
             //modelBuilder.Entity<ProductImage>()
             //    .Property(e => e.ImageData)
             //    .HasColumnType("varbinary(max)");
+
+            modelBuilder.Entity<Order>()
+                .Property(e => e.OrderStatus)
+                .HasConversion<int>();
         }
     }
 }
