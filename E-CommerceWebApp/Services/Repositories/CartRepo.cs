@@ -14,7 +14,6 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             return _dbContext.Carts.FirstOrDefault(c => c.UserId == userID);
         }
-
         public Cart CreateUserCart(string userID)
         {
             // checks if the user already has a cart if so return 
@@ -43,6 +42,17 @@ namespace E_CommerceWebApp.Services.Repositories
                                 .Single();
 
             return completeUserCart;
+        }
+        public bool ClearCartItems(int cartId) 
+        {
+            if (cartId == null || cartId < 1)
+                return false;
+
+            var userCart = GetCompleteUserCart(cartId);
+            userCart.CartItems.Clear();
+            _dbContext.SaveChanges();
+
+            return true;
         }
         public IEnumerable<CartItem> GetAllCartItems(int cartId)
         {

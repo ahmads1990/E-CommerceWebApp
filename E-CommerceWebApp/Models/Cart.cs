@@ -8,6 +8,6 @@
         public ApplicationUser User { get; set; }
         // date
         public DateTime TimeCreated { get; set; }
-        public IEnumerable<CartItem> CartItems { get; set; }
+        public ICollection<CartItem> CartItems { get; set; }
     }
 }
