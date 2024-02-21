@@ -1,5 +1,5 @@
-﻿using E_CommerceWebApp.Models;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceWebApp.Services.Repositories
 {
@@ -10,44 +10,72 @@ namespace E_CommerceWebApp.Services.Repositories
         {
             _dbContext = dbContext;
         }
-        public Category GetCategoryWithName(string categoryName)
+        // Read
+        public async Task<Category> GetCategoryWithIDAsync(int categoryID)
         {
-            return _dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName);
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryID == categoryID);
         }
-        public Category GetCategoryWithID(int categoryID)
+        public async Task<Category> GetCategoryWithNameAsync(string categoryName)
         {
-            return _dbContext.Categories.FirstOrDefault(c => c.CategoryID == categoryID);
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
         }
-        public IEnumerable<Category> GetAllCategories()
+
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return _dbContext.Categories.ToList();
+            return await _dbContext.Categories.ToListAsync();
         }
-        public IEnumerable<Category> GetCategoriesWithPagination(string searchQuery, int pageNumber, int pageSize)
+        public Task<IEnumerable<Category>> GetCategoriesWithPaginationAsync(string searchQuery, int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
         }
-        public Category AddNewCategory(Category category)
+        public async Task<bool> CheckCategoryExistAsync(int id)
         {
-            var createdCategory = _dbContext.Categories.Add(category);
-            _dbContext.SaveChanges();
+            return await _dbContext.Categories.AnyAsync(c => c.CategoryID == id);
+        }
+        // Create
+        public async Task<Category> AddNewCategoryAsync(Category newCategory)
+        {
+            if (newCategory == null || string.IsNullOrEmpty(newCategory.CategoryName))
+                throw new ArgumentException("Invalid category data.");
+
+            if (newCategory.CategoryID != 0)
+                throw new ArgumentException("Invalid category ID.");
+
+            var createdCategory = await _dbContext.Categories.AddAsync(newCategory);
+            await _dbContext.SaveChangesAsync();
+
             return createdCategory.Entity;
         }
-        public Category UpdateCategory(Category category)
+        // Update
+        public async Task<Category> UpdateCategoryAsync(Category category)
         {
+            if (category == null || string.IsNullOrEmpty(category.CategoryName))
+                throw new ArgumentException("Invalid category data.");
+
+            if (category.CategoryID <= 0)
+                throw new ArgumentException("Invalid category ID.");
+
+            if (!await CheckCategoryExistAsync(category.CategoryID)) return null;
+
             var updatedCategory = _dbContext.Categories.Update(category);
             _dbContext.SaveChanges();
+
             return updatedCategory.Entity;
         }
-        public Category DeleteCategory(int categoryID)
+        // Delete
+        public async Task<Category> DeleteCategoryAsync(int categoryID)
         {
-            var existingCategory = GetCategoryWithID(categoryID);
-            if (existingCategory != null)
-            {
-                _dbContext.Categories.Remove(existingCategory);
-                _dbContext.SaveChanges();
-            }
-            return existingCategory;
-        }
+            if (categoryID <= 0)
+                throw new ArgumentException("Invalid category ID.");
 
+            var category = await GetCategoryWithIDAsync(categoryID);
+
+            if (category is null) return null;
+
+            var deletedCategory = _dbContext.Categories.Remove(category);
+            _dbContext.SaveChanges();
+
+            return deletedCategory.Entity;
+        }
     }
 }

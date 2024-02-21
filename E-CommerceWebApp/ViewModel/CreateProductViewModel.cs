@@ -4,9 +4,9 @@ namespace E_CommerceWebApp.ViewModel
 {
     public class CreateProductViewModel
     {
-        [Display(Name ="Product Image")]
+        [Display(Name = "Product Image")]
         public IFormFile ProductImage { get; set; }
-        [Required, Display(Name ="Product Name")]
+        [Required, Display(Name = "Product Name")]
         public string ProductName { get; set; }
         public string Description { get; set; }
         [Required]
@@ -18,7 +18,8 @@ namespace E_CommerceWebApp.ViewModel
         public Product toProduct()
         {
             byte[] productImageBytes = null;
-            if (ProductImage != null) {
+            if (ProductImage != null)
+            {
                 using (var memoryStream = new MemoryStream())
                 {
                     // Copy the file content to the memory stream

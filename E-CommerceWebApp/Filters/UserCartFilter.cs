@@ -8,13 +8,13 @@ namespace E_CommerceWebApp.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var user = context.HttpContext.User;
-        
+
             if (user != null)
             {
                 // try to get cart id claim
                 var userCartIDClaim = user.FindFirst(CustomClaims.CartId)?.Value;
 
-                int cartId;      
+                int cartId;
                 // if couldn't find the claim or couldn't read the claim value
                 if (userCartIDClaim == null || !int.TryParse(userCartIDClaim, out cartId))
                     // Redirect to home

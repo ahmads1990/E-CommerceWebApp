@@ -9,8 +9,8 @@
         {
             // Check image size
             float imageSize = ByteToMegaByte(imageFile.Length);
-            if (imageSize == 0 || imageSize>ImageMaxSizeMB) 
-                return false; 
+            if (imageSize == 0 || imageSize > ImageMaxSizeMB)
+                return false;
 
             // Check image extention
             string imageType = imageFile.ContentType.Split("/").Last();

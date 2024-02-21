@@ -1,7 +1,7 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.PeopleService.v1;
-using Google.Apis.Services;
 using Google.Apis.PeopleService.v1.Data;
+using Google.Apis.Services;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 

@@ -2,12 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using E_CommerceWebApp.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -145,7 +139,7 @@ namespace E_CommerceWebApp.Areas.Identity.Pages.Account.Manage
             //TODO change the birth date validation
             if (Input.BirthDate != user.BirthDate)
             {
-             
+
                 user.BirthDate = Input.BirthDate;
             }
             if (Input.GenderIsMale != user.GenderIsMale)

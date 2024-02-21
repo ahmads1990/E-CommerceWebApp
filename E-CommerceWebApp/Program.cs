@@ -1,12 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using E_CommerceWebApp.Models.Email;
-using System.Configuration;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authentication;
-using System;
-using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +11,13 @@ builder.Services.AddControllersWithViews();
 //Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDBContext>(options => 
+    options.UseSqlServer(connectionString, builder =>
+    {
+        builder.EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null);
+    }));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     // Configure user settings
     options.User.RequireUniqueEmail = true;
@@ -33,6 +31,7 @@ builder.Services.AddSingleton<ImageService>();
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 
 builder.Services.AddScoped<ICartRepo, CartRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<EmailServerSettings>(builder.Configuration.GetSection("EmailServerSettings"));
@@ -63,7 +62,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

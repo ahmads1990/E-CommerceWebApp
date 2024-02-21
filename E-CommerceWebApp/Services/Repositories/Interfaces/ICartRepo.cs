@@ -6,6 +6,7 @@
         public Cart GetUserCart(string userID);
         public Cart CreateUserCart(string userID);
         public Cart GetCompleteUserCart(int cartId);
+        public bool ClearCartItems(int cartId);
         // CartItems
         public IEnumerable<CartItem> GetAllCartItems(int cartId);
         public CartItem GetCartItemByID(int itemId);

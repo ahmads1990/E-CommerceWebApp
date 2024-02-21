@@ -1,5 +1,4 @@
-﻿using E_CommerceWebApp.Models;
-using E_CommerceWebApp.ViewModel;
+﻿using E_CommerceWebApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,9 +13,9 @@ namespace E_CommerceWebApp.Controllers
             _productRepo = productRepo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _productRepo.GetProductsWithPagination(null, 1, defaultProductAmount);
+            var products = await _productRepo.GetProductsWithPaginationAsync(null, 1, defaultProductAmount);
             var viewModel = new HomeViewModel { Products = products };
             return View(viewModel);
         }
