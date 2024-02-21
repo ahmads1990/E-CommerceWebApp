@@ -11,7 +11,11 @@ builder.Services.AddControllersWithViews();
 //Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDBContext>(options => 
+    options.UseSqlServer(connectionString, builder =>
+    {
+        builder.EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null);
+    }));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
