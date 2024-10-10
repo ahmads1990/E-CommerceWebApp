@@ -3,154 +3,182 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <!-- Main Banner -->
-    <div class="bg-dark text-white m-1 py-5">
-        <div class="container py-5">
-            <h1>
-                Best products & <br />
-                brands in our store
-            </h1>
-            <p>Trendy Products, Factory Prices, Excellent Service</p>
-            <button type="button" class="btn btn-outline-light">
-                Learn more
-            </button>
-            <button type="button"
-                    class="btn btn-light shadow-0 text-primary pt-2 border border-white">
-                <span class="pt-1 text-dark mx-3">Purchase now</span>
-            </button>
-        </div>
-    </div>
-    <!--  Main Banner -->
-    <!-- Section -->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 ">
-            <header class="mb-4">
-                <h3>New products</h3>
-            </header>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                @foreach (var product in Model.Products)
-                {
-                    <!-- Render the partial view for each product -->
-                    @await Html.PartialAsync("_ProductPartial", product)
-                    ;
-                }
+<!-- Start Banner Hero -->
+<div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#hero-carousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#hero-carousel" data-bs-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" style="max-height:600px">
+        <div class="carousel-item active">
+            <div class="container-fluid">
+                <div class="row px-4 d-flex justify-content-center align-items-center" 
+                style="background-image:url(./Feature-Blade-rebav2.png); background-repeat: no-repeat;  background-size: cover;">
+                    @* Text content *@
+                    <div class=" col-5 d-lg-flex flex-shrink-1 align-items-center ">
+                        <div class="py-2 pt-md-4 py-lg-3 text-white">
+                            <div class="fw-bold">DRESS UP</div>
+                            <h1 class="fw-bolder text-uppercase" style="font-size:4em">
+                                Here Is Your One Chance, Fancy
+                            </h1>
+                            <p class="fw-bold w-75">
+                                For a limited time, pre-order exclusive POP! Reba McEntire in her iconic red dress from the 1993 CMA Awards!
+                            </p>
+                            <button class="btn btn btn-light text-uppercase rounded-pill fw-bold mt-1">Pre order now</button>
+                        </div>
+                    </div>
+                    @* Image *@
+                    <div class="col col-md-8 col-lg-6 order-lg-last ">
+                        <img style="max-height:550px" src="./Feature-Product-Funko-Reba.png" alt="Alternate Text" />
+                    </div>               
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Features -->
-    <section class="mt-5" style="background-color: #f5f5f5">
-        <div class="container text-dark pt-3">
-            <header class="pt-4 pb-3">
-                <h3>Why choose us</h3>
-            </header>
-            <!-- row one -->
-            <div class="row mb-4">
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-camera fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Reasonable prices</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-moon-stars-fill fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Best quality</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-airplane fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Worldwide shipping</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-people-fill fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Customer satisfaction</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-hand-thumbs-up fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Happy customers</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- item -->
-                <div class="col-lg-4 col-md-6">
-                    <figure class="d-flex align-items-center mb-4">
-                        <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
-                            <i class="bi bi-archive fa-2x fa-fw text-dark floating"></i>
-                        </span>
-                        <figcaption class="info">
-                            <h6 class="title">Thousand items</h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
-                                do eiusmor
-                            </p>
-                        </figcaption>
-                    </figure>
-                </div>
+    </div>
+    <a class="carousel-control-prev text-decoration-none w-auto ps-3"
+       href="#hero-carousel"
+       role="button"
+       data-bs-slide="prev">
+        <i class="bi bi-chevron-left text-secondary fs-2 fw-bold"></i>
+    </a>
+    <a class="carousel-control-next text-decoration-none w-auto pe-3"
+       href="#hero-carousel"
+       role="button"
+       data-bs-slide="next">
+        <i class="bi bi-chevron-right text-secondary fs-2 fw-bold"></i>
+    </a>
+</div>
+<!-- End Banner Hero -->
+<!-- Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 d-flex justify-content-center">
+        <header class="mb-4 fw-bolder">
+            <h3>New Picks for You</h3>
+        </header>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var product in Model.Products)
+            {
+                <!-- Render the partial view for each product -->
+                @await Html.PartialAsync("_ProductPartial", product)
+                ;
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="mt-5" style="background-color: #f5f5f5">
+    <div class="container text-dark pt-3">
+        <header class="pt-4 pb-3">
+            <h3>Why choose us</h3>
+        </header>
+        <!-- row one -->
+        <div class="row mb-4">
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-camera fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Reasonable prices</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-moon-stars-fill fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Best quality</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-airplane fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Worldwide shipping</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-people-fill fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Customer satisfaction</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-hand-thumbs-up fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Happy customers</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- item -->
+            <div class="col-lg-4 col-md-6">
+                <figure class="d-flex align-items-center mb-4">
+                    <span class="rounded-circle bg-white p-3 d-flex me-2 mb-2">
+                        <i class="bi bi-archive fa-2x fa-fw text-dark floating"></i>
+                    </span>
+                    <figcaption class="info">
+                        <h6 class="title">Thousand items</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed
+                            do eiusmor
+                        </p>
+                    </figcaption>
+                </figure>
             </div>
         </div>
-    </section>
-    <!-- Feature -->
-    <img class="rounded w-100"
-         src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg"
-         style="object-fit: cover"
-         height="160" />
-    <div class="mt-2 text-muted small d-block mb-1">
-        <h6 class="text-dark">Stories</h6>
-        <p>
-            When you enter into any new area
-        </p>
     </div>
+</section>
+<!-- Feature -->
+<img class="rounded w-100"
+     src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg"
+     style="object-fit: cover"
+     height="160" />
+<div class="mt-2 text-muted small d-block mb-1">
+    <h6 class="text-dark">Stories</h6>
+    <p>
+        When you enter into any new area
+    </p>
 </div>
 
 <!--  final captions -->
